@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Associate;
+use App\Models\Enquiry;
+use App\Models\EventRegistration;
+use App\Models\JobApplication;
+
+class DashboardController extends Controller
+{
+    public function index()
+    {
+        $counts = [
+            'Enquiries' => ['total' => Enquiry::count(), 'new' => Enquiry::where('status', 'new')->count(), 'route' => 'admin.enquiries.index'],
+            'Event Registrations' => ['total' => EventRegistration::count(), 'new' => null, 'route' => 'admin.event-registrations.index'],
+            'Job Applications' => ['total' => JobApplication::count(), 'new' => JobApplication::where('status', 'new')->count(), 'route' => 'admin.job-applications.index'],
+            'Associate Registrations' => ['total' => Associate::count(), 'new' => Associate::where('status', 'new')->count(), 'route' => 'admin.associates.index'],
+        ];
+
+        return view('admin.dashboard', compact('counts'));
+    }
+}

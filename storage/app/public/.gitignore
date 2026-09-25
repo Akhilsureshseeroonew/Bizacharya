@@ -1,0 +1,11 @@
+*
+!.gitignore
+
+# Design photos seeded by DesignContentSeeder — checked in so a fresh clone
+# renders the same sector/service/event images without a manual upload step.
+!sectors/
+!sectors/**
+!services/
+!services/**
+!events/
+!events/**
