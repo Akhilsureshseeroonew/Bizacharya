@@ -163,7 +163,9 @@ abstract class ResourceController extends Controller
                     }
                     break;
                 case 'number':
-                    $item->{$name} = $request->filled($name) ? $request->input($name) : null;
+                    // Every "number" field in this admin is a NOT NULL sort_order column
+                    // (default 0) — leaving it blank must not send an explicit NULL.
+                    $item->{$name} = $request->filled($name) ? $request->input($name) : 0;
                     break;
                 default:
                     $item->{$name} = $request->input($name);
