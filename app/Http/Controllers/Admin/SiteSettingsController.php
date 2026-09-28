@@ -18,6 +18,7 @@ class SiteSettingsController extends Controller
             'email' => ['Email', 'text'],
             'whatsapp' => ['WhatsApp number (digits with country code, e.g. 919207780808)', 'text'],
             'address_full' => ['Registered address (one line per address line)', 'textarea'],
+            'map_query' => ['Map location (address, or "lat,lng" — used for the embedded map on the Contact page)', 'text'],
             'social.facebook' => ['Facebook URL', 'text'],
             'social.instagram' => ['Instagram URL', 'text'],
             'social.linkedin' => ['LinkedIn URL', 'text'],

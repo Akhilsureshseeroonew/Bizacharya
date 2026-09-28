@@ -9,6 +9,7 @@ return [
     'email' => 'info@bizacharya.com',
     'whatsapp' => '919207780808',
     'address_full' => "First Floor, Athikavil Complex\nUrakam, Thrissur\nKerala – 680562",
+    'map_query' => 'Athikavil Complex, Urakam, Thrissur, Kerala 680562',
 
     'social' => [
         'facebook' => 'https://www.facebook.com/',

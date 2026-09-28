@@ -68,7 +68,7 @@
     <p class="eyebrow">Visit Us</p>
     <h2>Find Us on the Map</h2>
     <div class="map">
-      <iframe title="Map: Bizacharya, Athikavil Complex, Urakam, Thrissur" src="https://www.google.com/maps?q=Athikavil+Complex,+Urakam,+Thrissur,+Kerala+680562&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <iframe title="Map: {{ config('site.name') }}, {{ config('site.map_query') }}" src="https://www.google.com/maps?q={{ urlencode(config('site.map_query')) }}&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
   </div>
 </section>
