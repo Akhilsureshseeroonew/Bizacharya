@@ -36,12 +36,23 @@ abstract class LeadController extends Controller
             'routeBase' => $this->routeBase,
             'title' => $this->title,
             'pluralTitle' => $this->pluralTitle,
+            'hasStatus' => (bool) $this->statusOptions,
         ]);
     }
 
     public function show($id)
     {
         $item = $this->model::findOrFail($id);
+
+        if (is_null($item->viewed_at)) {
+            $updates = ['viewed_at' => now()];
+
+            if ($this->statusOptions && $item->status === 'new') {
+                $updates['status'] = 'viewed';
+            }
+
+            $item->forceFill($updates)->save();
+        }
 
         return view('admin.leads.show', [
             'item' => $item,

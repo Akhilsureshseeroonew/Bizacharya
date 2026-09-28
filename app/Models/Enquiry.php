@@ -12,6 +12,7 @@ class Enquiry extends Model
     {
         return [
             'service' => 'array',
+            'viewed_at' => 'datetime',
         ];
     }
 }

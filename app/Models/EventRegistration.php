@@ -8,6 +8,11 @@ class EventRegistration extends Model
 {
     protected $guarded = ['id'];
 
+    protected function casts(): array
+    {
+        return ['viewed_at' => 'datetime'];
+    }
+
     public function event()
     {
         return $this->belongsTo(Event::class);

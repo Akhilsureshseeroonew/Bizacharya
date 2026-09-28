@@ -17,7 +17,7 @@ class AssociateAdminController extends LeadController
     protected array $columns = ['name', 'mobile', 'email', 'district', 'status', 'created_at'];
 
     protected ?array $statusOptions = [
-        'new' => 'New',
+        'viewed' => 'Viewed',
         'contacted' => 'Contacted',
         'approved' => 'Approved',
         'rejected' => 'Rejected',

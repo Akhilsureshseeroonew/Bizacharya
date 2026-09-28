@@ -17,7 +17,7 @@ class EnquiryAdminController extends LeadController
     protected array $columns = ['name', 'mobile', 'email', 'interest', 'status', 'created_at'];
 
     protected ?array $statusOptions = [
-        'new' => 'New',
+        'viewed' => 'Viewed',
         'contacted' => 'Contacted',
         'closed' => 'Closed',
     ];

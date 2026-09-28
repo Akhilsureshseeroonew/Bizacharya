@@ -18,7 +18,7 @@ class JobApplicationAdminController extends LeadController
     protected array $columns = ['job_title', 'name', 'email', 'phone', 'status', 'created_at'];
 
     protected ?array $statusOptions = [
-        'new' => 'New',
+        'viewed' => 'Viewed',
         'reviewing' => 'Reviewing',
         'shortlisted' => 'Shortlisted',
         'rejected' => 'Rejected',

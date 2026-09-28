@@ -1384,7 +1384,7 @@ li[data-reveal].is-visible .row-item__image { opacity: 1; transform: translateX(
 .multiselect__placeholder { color: var(--muted); }
 .chip { display: inline-flex; align-items: center; gap: .3rem; padding: .2rem .6rem; border-radius: 4px; background: var(--surface); color: var(--ink); font-size: .8rem; font-weight: 500; border: 1px solid var(--line); }
 .chip--all { background: var(--brand-2); color: #fff; border-color: var(--brand-2); }
-.multiselect__menu { position: absolute; z-index: 20; left: 0; right: 0; top: calc(100% + 6px); background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 16px 40px -20px rgba(0, 0, 0, .25); padding: .5rem; display: none; max-height: 320px; overflow-y: auto; }
+.multiselect__menu { position: absolute; z-index: 20; left: 0; right: 0; top: calc(100% + 6px); background: #fff; color: var(--ink); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 16px 40px -20px rgba(0, 0, 0, .25); padding: .5rem; display: none; max-height: 320px; overflow-y: auto; }
 .multiselect.is-open .multiselect__menu { display: block; }
 .multiselect__option { display: flex; align-items: center; gap: .65rem; padding: .55rem .7rem; border-radius: var(--radius-sm); font-size: .92rem; cursor: pointer; }
 .multiselect__option:hover { background: var(--surface); }
@@ -1982,7 +1982,7 @@ fieldset[disabled] { opacity: .6; }
 /* Glass fields: boxed with a translucent white border instead of underlined, for legibility over
    a busy photo — the sitewide .field/.field__error contract is untouched, only colours change. */
 .contact-card--glass .field { position: relative; margin-bottom: 1.1rem; }
-.contact-card--glass .field label, .contact-card--glass .field .field__label {
+.contact-card--glass .field > label, .contact-card--glass .field .field__label {
   display: block; font-size: .78rem; font-weight: 500; letter-spacing: .02em; color: rgba(255, 255, 255, .75); margin-bottom: .4rem;
 }
 .contact-card--glass .field input, .contact-card--glass .field select, .contact-card--glass .multiselect__toggle {
