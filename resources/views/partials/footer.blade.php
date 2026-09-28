@@ -50,7 +50,6 @@
   <div class="container">
     <div class="footer__bottom">
       <span>&copy; {{ date('Y') }} {{ config('site.legal_name') }} All rights reserved.</span>
-      <span><a href="{{ route('careers.index') }}">Careers</a> &middot; <a href="{{ route('contact') }}">Contact</a></span>
     </div>
   </div>
 </footer>
