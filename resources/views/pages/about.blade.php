@@ -148,6 +148,7 @@
             @endforeach
           </div>
         @endif
+        {!! $page->leader_bio_more !!}
       </div>
     </div>
   </div>

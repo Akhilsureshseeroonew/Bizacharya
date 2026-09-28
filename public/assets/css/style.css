@@ -179,7 +179,7 @@ strong { font-weight: 600; color: var(--ink); }
 .topbar { background: #fff; border-bottom: 1px solid var(--line); font-size: .82rem; color: var(--muted); }
 .topbar__inner { display: flex; align-items: stretch; justify-content: space-between; min-height: 42px; gap: 1rem; }
 .topbar__info { display: flex; align-items: stretch; }
-.topbar__info > * { display: inline-flex; align-items: center; gap: .5rem; padding: 0 1.1rem; border-right: 1px solid var(--line); color: var(--muted); white-space: nowrap; }
+.topbar__info > * { display: inline-flex; align-items: center; gap: .5rem; padding: 0 1.1rem; border-right: 1px solid var(--line); color: var(--text); font-weight: 500; white-space: nowrap; }
 .topbar__info > *:first-child { padding-left: 0; }
 .topbar__info a:hover { color: var(--primary); }
 .topbar__info .icon { width: 14px; height: 14px; color: var(--primary); }
@@ -188,7 +188,7 @@ strong { font-weight: 600; color: var(--ink); }
 .topbar__auth a { color: var(--ink); }
 .topbar__auth a:hover { color: var(--primary); }
 .social--cells { gap: 0; }
-.social--cells a { width: 40px; height: auto; border-radius: 0; border-left: 1px solid var(--line); color: var(--muted); }
+.social--cells a { width: 40px; height: auto; border-radius: 0; border-left: 1px solid var(--line); color: var(--text); }
 .social--cells li:last-child a { border-right: 1px solid var(--line); }
 .social--cells a:hover { background: var(--surface); color: var(--primary); }
 .social--cells .icon { width: 15px; height: 15px; }
@@ -248,16 +248,19 @@ strong { font-weight: 600; color: var(--ink); }
 /* Homepage only: header integrated into the dark hero instead of a separate white bar.
    The logo has no light/white asset in the project, so it's inverted via filter here —
    the file itself is untouched, this only affects how it renders on the dark header. */
-body.has-hero .topbar { background: var(--black); border-bottom-color: rgba(255, 255, 255, .06); }
+/* A shade deeper than the header's navy so the strip reads as its own band, with bright text,
+   teal icons and visible (but soft) cell dividers. */
+body.has-hero .topbar { background: #061A2E; border-bottom-color: rgba(255, 255, 255, .1); }
 /* The cell dividers inherit the light-theme --line (#D9E4EE), which reads as a hard bright
-   rule against the dark hero header — drop them to a faint white so they just separate
-   rather than draw the eye. */
-body.has-hero .topbar__info > * { border-right-color: rgba(255, 255, 255, .07); }
-body.has-hero .topbar__auth { border-left-color: rgba(255, 255, 255, .07); }
-body.has-hero .social--cells a { border-left-color: rgba(255, 255, 255, .07); }
-body.has-hero .social--cells li:last-child a { border-right-color: rgba(255, 255, 255, .07); }
-body.has-hero .topbar__info a, body.has-hero .topbar__right a { color: rgba(255, 255, 255, .78); }
+   rule against the dark hero header — a soft white separates without drawing the eye. */
+body.has-hero .topbar__info > * { border-right-color: rgba(255, 255, 255, .12); }
+body.has-hero .topbar__auth { border-left-color: rgba(255, 255, 255, .12); }
+body.has-hero .social--cells a { border-left-color: rgba(255, 255, 255, .12); }
+body.has-hero .social--cells li:last-child a { border-right-color: rgba(255, 255, 255, .12); }
+body.has-hero .topbar__info a, body.has-hero .topbar__right a { color: rgba(255, 255, 255, .92); }
+body.has-hero .topbar__info .icon { color: #4FC3B5; }
 body.has-hero .topbar__info a:hover, body.has-hero .topbar__right a:hover { color: #fff; }
+body.has-hero .social--cells a:hover { background: rgba(255, 255, 255, .1); color: #fff; }
 body.has-hero .topbar__auth span { color: rgba(255, 255, 255, .35); }
 body.has-hero .header { background: var(--black); box-shadow: 0 2px 20px rgba(0, 0, 0, .3); }
 body.has-hero .header.is-scrolled { box-shadow: 0 6px 24px -10px rgba(0, 0, 0, .5); }
@@ -353,7 +356,7 @@ body.has-hero .burger { background: transparent; border-color: rgba(255, 255, 25
 /* Width-driven, not viewport-height-driven like the old `calc(100vh - 120px)` was — keeps the
    hero's proportions predictable across very tall/short browser windows instead of stretching
    with viewport height. */
-@media (min-width: 992px) { .hero { min-height: clamp(620px, 54vw, 820px); } }
+@media (min-width: 1200px) { .hero { min-height: clamp(620px, 54vw, 820px); } }
 .hero .container { width: 100%; }
 /* Panel, not full-bleed: this photo (assets/img/hero_bg.png) carries its own baked-in left-edge
    dissolve — the pixels themselves fade to this section's navy before "Foundation", the leftmost
@@ -391,7 +394,7 @@ body.has-hero .burger { background: transparent; border-color: rgba(255, 255, 25
    Between 992 and 1280 the copy column and the photo want more room than the viewport has, and
    the photo's first caption ("Foundation") would land on the paragraph — so the panel gives way
    there. Above 1600 there's room for both and the photo takes the larger share. */
-@media (min-width: 992px) and (max-width: 1279.98px) { .hero__bg { left: 53%; } }
+@media (min-width: 1200px) and (max-width: 1279.98px) { .hero__bg { left: 53%; } }
 @media (min-width: 1600px) { .hero__bg { left: 40%; } }
 /* Nav — only ever appears once initHeroSlider() finds a second slide to switch to. One compact
    cluster (prev, dots, next, all inline) anchored bottom-right, inside the photo itself and well
@@ -433,7 +436,7 @@ body.has-hero .burger { background: transparent; border-color: rgba(255, 255, 25
 .chip-label { display: inline-flex; align-items: center; gap: .5rem; background: #fff; color: var(--ink); padding: .65rem 1rem; border-radius: var(--radius-sm); font-weight: 500; font-size: .95rem; box-shadow: 0 6px 20px -10px rgba(0, 0, 0, .3); }
 .hero .btn--outline { background: transparent; color: #fff; border-color: rgba(255, 255, 255, .4); }
 .hero .btn--outline:hover { color: #fff; border-color: #fff; background: rgba(255, 255, 255, .08); }
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
   /* Container stays centred (so the hero lines up with every other section's left gutter);
      the grid track is what narrows to the dark half and sits at the container's left edge.
      62% (694px against this container) rather than half: the deployed build gives the hero
@@ -452,17 +455,44 @@ body.has-hero .burger { background: transparent; border-color: rgba(255, 255, 25
 .hero__stats .icon { width: 22px; height: 22px; flex: none; color: #4FC3B5; }
 
 @keyframes hero-fade-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@media (max-width: 991.98px) {
-  .hero { flex-direction: column; align-items: stretch; }
-  .hero__inner { grid-template-columns: 1fr; }
-  /* Single column now, so the photo can't sit beside the text — it becomes a full-width strip
-     above the copy instead. Still `contain`, so the whole frame (and every caption) survives —
-     and the nav cluster drops to the strip's own bottom-right, same as desktop. */
+/* Phones and tablets (incl. iPad landscape, 1024px): stacked layout. Below 1200px the side-by-side
+   layout left the photo as a small box stuck in the bottom-right with empty space above it. */
+@media (max-width: 1199.98px) {
+  .hero { flex-direction: column; align-items: stretch; min-height: 0; }
+  .hero__inner { grid-template-columns: 1fr; padding-top: clamp(1.75rem, 5vw, 3rem); }
+  /* Single column, so the photo becomes a full-width strip above the copy. Its height follows the
+     photo's own aspect ratio (so on phones the whole frame fills the width instead of shrinking
+     into a corner), capped on tablets. Still `contain` and right-anchored — the photo's baked
+     left-edge dissolve blends into the navy, and every caption survives. */
   .hero__bg {
     position: relative; inset: auto;
-    width: 100%; height: clamp(230px, 48vw, 400px);
+    width: 100%; height: min(calc(100vw * 1160 / 1404), 440px); aspect-ratio: auto;
   }
-  .hero__bg-slide { background-position: right center; }
+  .hero__bg-slide { background-position: right bottom; }
+  /* Four stats don't fit on one line in a single narrowish column — a tidy 2×2 grid instead */
+  .hero__stats { display: grid; grid-template-columns: repeat(2, minmax(0, max-content)); gap: 1.25rem 2.5rem; }
+}
+@media (min-width: 768px) and (max-width: 1199.98px) {
+  .hero__stats { grid-template-columns: repeat(4, max-content); gap: 1.25rem 2rem; }
+}
+/* Phones: the photo covers the whole hero, behind the copy. A navy scrim keeps the top of the
+   photo (hand + king) visible and deepens behind the text so it stays readable; the copy starts
+   a little lower to leave that top band clear. */
+@media (max-width: 767.98px) {
+  .hero__bg { position: absolute; inset: 0; width: auto; height: auto; }
+  .hero__bg-slide { background-size: cover; background-position: 88% top; }
+  .hero__bg::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(180deg,
+      rgba(10, 37, 64, .1) 0%, rgba(10, 37, 64, .4) 12%,
+      rgba(10, 37, 64, .82) 26%, rgba(10, 37, 64, .9) 100%);
+  }
+  .hero__inner { padding-top: clamp(7rem, 30vw, 9.5rem); }
+}
+@media (max-width: 575.98px) {
+  .hero .btn-group { flex-direction: column; }
+  .hero .btn-group .btn { width: 100%; justify-content: center; }
+  .hero__stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1rem 1rem; margin-top: 1.75rem; }
 }
 /* Stats row (pill label + big number + note) */
 .stats { display: grid; gap: 2rem; padding: clamp(2rem, 4vw, 3rem) 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
@@ -961,39 +991,73 @@ li[data-reveal].is-visible .row-item__image { opacity: 1; transform: translateX(
 .strip-cta .btn-group { flex: none; }
 .strip-cta .btn--white { background: transparent; color: #fff; border-color: rgba(255, 255, 255, .42); }
 .strip-cta .btn--white:hover { background: #fff; color: var(--black); border-color: #fff; }
-@media (max-width: 767.98px) {
-  .strip-cta__inner { flex-direction: column; align-items: flex-start; text-align: left; }
+/* Tablets and phones: stacked and centred */
+@media (max-width: 991.98px) {
+  .strip-cta__inner { flex-direction: column; align-items: center; gap: 1.25rem; text-align: center; }
   .strip-cta::after { display: none; }
-  .strip-cta .btn-group { width: 100%; }
-  .strip-cta .btn { flex: 1 1 auto; }
+  /* In a column the desktop flex-basis (300px) turns into a height, leaving an empty gap under
+     the copy — let the copy size to its text and span the full width instead. */
+  .strip-cta__copy { flex: none; width: 100%; }
+  .strip-cta .btn-group { justify-content: center; }
+}
+@media (max-width: 767.98px) {
+  .strip-cta__icon { width: 48px; height: 48px; }
+  .strip-cta .btn-group { width: 100%; flex-direction: column; gap: .65rem; }
+  .strip-cta .btn { width: 100%; justify-content: center; }
 }
 
 /* ---------- 11. Journey roadmap (reference: bizacharya-omega) ---------- */
 .journey { position: relative; overflow: hidden; isolation: isolate; background: #fff; }
 .journey .section-head p { max-width: 720px; }
-/* Bizacharya mark (logo without the wordmark), faint in the background — decorative only.
-   Anchored past the top-right corner and rotated, so the section's overflow:hidden crops it
-   into the corner instead of leaving a complete shape floating in the layout. */
-.journey__watermark {
-  position: absolute; top: -10%; right: -10%; z-index: 0; pointer-events: none; user-select: none;
-  width: clamp(180px, 20vw, 340px); height: auto; opacity: .06;
-  transform: rotate(320deg); transform-origin: center;
-}
 .journey .container { position: relative; z-index: 1; }
 .roadmap__cta { text-align: center; margin-top: clamp(2rem, 4vw, 3.5rem); }
 .roadmap__cta .btn { box-shadow: 0 10px 24px -12px rgba(1, 82, 147, .6); }
 
-/* Bizacharya mark (logo without the wordmark), faint in the bottom-right corner of every section
-   that sits on plain white — decorative only. Injected by initSectionWatermarks() in main.js,
-   which finds those sections automatically rather than this being hand-placed per page, so it
-   also covers any section added later. aspect-ratio matches the source file (225×241) so the box
-   has its final size immediately, with no layout jump once the image itself loads in.
-   Held upright (no rotation) — the mark reads as a still logo, not a decal on an angle. Static,
-   no animation: a plain watermark sitting quietly behind the content. */
+/* Bizacharya mark (logo without the wordmark) as a faint, curated watermark — decorative only.
+   Opt-in per section via data-watermark="<placement>" (see initSectionWatermarks() in main.js),
+   so it only sits in open white space, never behind forms, photo rows or dense copy.
+   The layer fills the section and clips the mark, so it can bleed off an edge and drift with
+   parallax without the section needing overflow:hidden. Upright by default; the Journey corner
+   mark is rotated (via `rotate`, which composes with the parallax transform).
+   --wm-y is the placement's own vertical anchor; --wm-shift is the parallax offset from JS.
+   aspect-ratio matches the source file (225×241) so there is no layout jump on load. */
 .section-watermark {
-  position: absolute; bottom: 6%; right: 5%; z-index: 0;
+  position: absolute; inset: 0; z-index: 0; overflow: hidden;
   pointer-events: none; user-select: none;
-  width: clamp(68px, 6.5vw, 120px); aspect-ratio: 225 / 241; opacity: .1;
+}
+.section-watermark__img {
+  position: absolute; height: auto; aspect-ratio: 225 / 241; opacity: .05;
+  transform: translate3d(0, calc(var(--wm-y, 0%) + var(--wm-shift, 0px)), 0);
+  transition: transform .15s linear;
+}
+/* Large, cropped into the top-right corner — for sections with a centred heading */
+.section-watermark--corner-tr .section-watermark__img {
+    top: -19%;
+    right: -13%;
+    width: clamp(240px, 28vw, 460px);
+    rotate: 314deg;
+}
+/* Medium, rotated, cropped into the top-left corner (What we offer) */
+.section-watermark--corner-tl .section-watermark__img {
+    top: -9%;
+    left: -6%;
+    width: clamp(150px, 28vw, 340px);
+    rotate: 133deg;
+}
+/* Large, bleeding off the left edge — fills the empty side of a centred timeline / list */
+.section-watermark--side-l .section-watermark__img { top: 50%; left: -9%; --wm-y: -50%; width: clamp(260px, 30vw, 480px); opacity: .045; }
+/* Medium, bleeding off the right edge — beside a narrow centred column */
+.section-watermark--side-r .section-watermark__img { top: 50%; right: -3%; --wm-y: -50%; width: clamp(200px, 19vw, 320px); }
+
+/* Phones: content runs full width, so side / bottom marks would sit behind text — keep only the
+   corner marks, smaller and further cropped, and leave the rest out. */
+@media (max-width: 767.98px) {
+  .section-watermark--corner-tl, .section-watermark--side-r { display: none; }
+  .section-watermark--corner-tr .section-watermark__img { top: -3%; right: -18%; width: 190px; opacity: .04; }
+  .section-watermark--side-l .section-watermark__img { top: -2%; left: auto; right: -18%; --wm-y: 0%; width: 190px; opacity: .04; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .section-watermark__img { transition: none; }
 }
 
 /* ---------- Journey map (individual circular milestones, real photos) ---------- */
@@ -1643,7 +1707,7 @@ li[data-reveal].is-visible .row-item__image { opacity: 1; transform: translateX(
 .multiselect__placeholder { color: var(--muted); }
 .chip { display: inline-flex; align-items: center; gap: .3rem; padding: .2rem .6rem; border-radius: 4px; background: var(--surface); color: var(--ink); font-size: .8rem; font-weight: 500; border: 1px solid var(--line); }
 .chip--all { background: var(--brand-2); color: #fff; border-color: var(--brand-2); }
-.multiselect__menu { position: absolute; z-index: 20; left: 0; right: 0; top: calc(100% + 6px); background: #fff; color: var(--ink); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 16px 40px -20px rgba(0, 0, 0, .25); padding: .5rem; display: none; max-height: 320px; overflow-y: auto; }
+.multiselect__menu { position: absolute; z-index: 20; left: 0; right: 0; top: calc(100% + 6px); background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 16px 40px -20px rgba(0, 0, 0, .25); padding: .5rem; display: none; max-height: 320px; overflow-y: auto; }
 .multiselect.is-open .multiselect__menu { display: block; }
 .multiselect__option { display: flex; align-items: center; gap: .65rem; padding: .55rem .7rem; border-radius: var(--radius-sm); font-size: .92rem; cursor: pointer; }
 .multiselect__option:hover { background: var(--surface); }
@@ -2255,7 +2319,7 @@ fieldset[disabled] { opacity: .6; }
 /* Glass fields: boxed with a translucent white border instead of underlined, for legibility over
    a busy photo — the sitewide .field/.field__error contract is untouched, only colours change. */
 .contact-card--glass .field { position: relative; margin-bottom: 1.1rem; }
-.contact-card--glass .field > label, .contact-card--glass .field .field__label {
+.contact-card--glass .field label, .contact-card--glass .field .field__label {
   display: block; font-size: .78rem; font-weight: 500; letter-spacing: .02em; color: rgba(255, 255, 255, .75); margin-bottom: .4rem;
 }
 .contact-card--glass .field input, .contact-card--glass .field select, .contact-card--glass .multiselect__toggle {
@@ -2272,6 +2336,21 @@ fieldset[disabled] { opacity: .6; }
 .contact-card--glass .field__hint { color: rgba(255, 255, 255, .6); }
 .contact-card--glass .multiselect__toggle > .icon { color: rgba(255, 255, 255, .75); }
 .contact-card--glass .multiselect__chips { color: rgba(255, 255, 255, .55); }
+/* Service dropdown on the glass card. The card clips its contents (overflow:hidden, for the
+   rounded photo) and the full-width submit bar sits above the glass panel, so a menu dropping
+   downward was cut off and hidden behind "Send Message". Open it upward over the fields above
+   instead, and give the options dark text — the glass form's white label colour made them
+   invisible on the white menu. */
+.contact-card--glass .multiselect__menu { top: auto; bottom: calc(100% + 6px); max-height: min(320px, 55vh); }
+/* .field label (the glass form's label style) also matches these option labels — out-specify it */
+.contact-card--glass .field label.multiselect__option {
+  display: flex; align-items: center; gap: .65rem; color: var(--ink);
+  font-size: .92rem; font-weight: 400; letter-spacing: 0; margin-bottom: 0;
+}
+.contact-card--glass .field label.multiselect__option--all { font-weight: 500; margin-bottom: .35rem; }
+.contact-card--glass .field .multiselect__option input { background: none; border: 0; box-shadow: none; }
+.contact-card--glass .multiselect__chips .chip { color: #fff; background: rgba(255, 255, 255, .16); border-color: rgba(255, 255, 255, .3); }
+.contact-card--glass .multiselect__placeholder { color: rgba(255, 255, 255, .6); }
 @media (min-width: 992px) {
   .contact-card__glass-panel { width: 56%; }
 }
@@ -2376,13 +2455,25 @@ fieldset[disabled] { opacity: .6; }
    deliberately not a card/tile grid. Scoped to .our-journey / .timeline*, entirely separate from
    the homepage's entrepreneur-journey roadmap (.journey / .journey-map / .journey-stage). */
 
-.timeline { position: relative; max-width: 860px; margin: clamp(2.5rem, 5vw, 4rem) auto 0; }
-.timeline__list { position: relative; list-style: none; margin: 0; padding: 0; }
-.timeline__list::before {
-  content: ""; position: absolute; top: 6px; bottom: 6px; left: 7px; width: 2px; background: var(--line);
+/* Brand arcs and dots sweeping into the bottom-right corner (transparent PNG over white).
+   Full-width on desktop; kept at a minimum width on phones so the arcs stay legible there. */
+.our-journey {
+  background: #fff url("../img/about/shape1.png") right bottom / max(100%, 720px) auto no-repeat;
 }
+
+/* --tl-value is the headline size; the marker is centred on that headline's first line.
+   The spine runs from the first marker's centre to the last marker's centre — initCompanyTimeline()
+   measures those and writes --line-top / --line-len (the fallbacks cover the no-JS case). */
+.timeline { --tl-value: clamp(1.6rem, 2.2vw, 2.1rem); --tl-dot: 16px; position: relative; max-width: 860px; margin: clamp(2.5rem, 5vw, 4rem) auto 0; }
+.timeline__list { position: relative; list-style: none; margin: 0; padding: 0; }
+.timeline__list::before, .timeline__list::after {
+  content: ""; position: absolute; z-index: 0; width: 2px;
+  left: calc(var(--tl-dot) / 2 - 1px);
+  top: var(--line-top, calc(var(--tl-value) * .55));
+  height: var(--line-len, calc(100% - var(--tl-value)));
+}
+.timeline__list::before { background: var(--line); }
 .timeline__list::after {
-  content: ""; position: absolute; top: 6px; left: 7px; width: 2px; height: calc(100% - 12px);
   background: linear-gradient(180deg, var(--primary), var(--brand-2));
   transform: scaleY(var(--progress, 0)); transform-origin: top center; transition: transform .6s var(--ease);
 }
@@ -2390,25 +2481,28 @@ fieldset[disabled] { opacity: .6; }
 
 .timeline__item { position: relative; padding-left: 2.75rem; padding-bottom: clamp(2.25rem, 4vw, 3.25rem); }
 .timeline__item:last-child { padding-bottom: 0; }
+/* z-index keeps the marker above the spine (the progress line is ::after, so it would otherwise paint on top) */
 .timeline__marker {
-  position: absolute; left: 0; top: 4px; width: 16px; height: 16px; border-radius: 50%;
+  position: absolute; z-index: 2; left: 0; top: calc(var(--tl-value) * .55 - var(--tl-dot) / 2);
+  width: var(--tl-dot); height: var(--tl-dot); border-radius: 50%;
   background: #fff; border: 2px solid var(--line); box-sizing: border-box;
   transition: border-color .4s var(--ease), background .4s var(--ease), box-shadow .4s var(--ease);
 }
+.timeline__content { position: relative; z-index: 1; }
 .timeline__item.is-in .timeline__marker { border-color: var(--brand-2); background: var(--brand-2); box-shadow: 0 0 0 5px rgba(26, 154, 140, .15); }
 
 .timeline__content { opacity: 0; transform: translateY(18px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
 .timeline__item.is-in .timeline__content { opacity: 1; transform: none; }
 
-.timeline__value { display: block; margin-bottom: .5rem; font-size: clamp(1.6rem, 2.2vw, 2.1rem); font-weight: 600; letter-spacing: -0.03em; color: var(--black); line-height: 1.1; }
+.timeline__value { display: block; margin-bottom: .5rem; font-size: var(--tl-value); font-weight: 600; letter-spacing: -0.03em; color: var(--black); line-height: 1.1; }
 .timeline__content p { margin: 0; color: var(--muted); font-size: .95rem; line-height: 1.6; max-width: 460px; }
 .timeline__item--today .timeline__value, .timeline__item--today .timeline__marker { color: var(--brand-2); }
 .timeline__item--today .timeline__marker { border-color: var(--brand-2); }
 
 /* Desktop: zigzag either side of a centred spine — more editorial than a single left rail */
 @media (min-width: 768px) {
-  .timeline__list::before, .timeline__list::after { left: 50%; }
-  .timeline__marker { left: 50%; transform: translateX(-50%); }
+  .timeline__list::before, .timeline__list::after { left: calc(50% - 1px); }
+  .timeline__marker { left: calc(50% - var(--tl-dot) / 2); }
   .timeline__item { padding-left: 0; padding-bottom: clamp(3rem, 5vw, 4rem); }
   .timeline__content { width: calc(50% - 3rem); }
   .timeline__item:nth-child(odd) .timeline__content { margin-right: auto; text-align: right; }

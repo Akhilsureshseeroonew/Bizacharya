@@ -36,7 +36,7 @@
 </section>
 
 @if ($upcomingEvents->isNotEmpty())
-<section class="section section--light events" id="events">
+<section class="section section--light events" id="events" data-watermark="corner-tr" data-watermark-parallax>
   <div class="container">
     <div class="section-head section-head--center" data-reveal>
       <p class="eyebrow">Upcoming Events</p>
@@ -86,8 +86,7 @@
 </section>
 @endif
 
-<section class="section journey" id="journey" data-no-watermark>
-  <img class="journey__watermark" src="{{ asset('assets/img/logo-mark.png') }}" alt="" aria-hidden="true" loading="lazy">
+<section class="section journey" id="journey" data-watermark="corner-tr" data-watermark-parallax>
   <div class="container">
     <div class="section-head section-head--center" data-reveal>
       <p class="eyebrow">The Bizacharya Journey</p>
@@ -141,7 +140,7 @@
 @endif
 
 @if ($services->isNotEmpty())
-<section class="section services-sec" id="services">
+<section class="section services-sec" id="services" data-watermark="corner-tl" data-watermark-parallax="0.1">
   <div class="container">
     <div class="row grid-gap">
       <div class="col-lg-4" data-reveal>

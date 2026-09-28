@@ -1,6 +1,6 @@
 @extends('layouts.site')
 
-@section('title', $post->title . ' | Bizacharya Learning Hub')
+@section('title', $post->title . ' | Bizacharya')
 @section('description', $post->excerpt)
 
 @php

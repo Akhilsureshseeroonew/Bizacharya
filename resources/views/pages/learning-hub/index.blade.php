@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
-@section('title', 'Bizacharya Learning Hub — Entrepreneurship Courses & Resources')
-@section('description', 'Expert-led courses, business guides, webinars, templates, and exclusive learning resources for entrepreneurs across Kerala.')
+@section('title', 'Learning Hub - Entrepreneurship Courses Kerala | Bizacharya')
+@section('description', 'Access expert-led courses, webinars, guides, and templates on the Bizacharya Learning Hub. Practical entrepreneurship learning for Kerala businesses.')
 
 @section('content')
 <section class="page-banner">

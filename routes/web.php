@@ -39,8 +39,8 @@ Route::post('/associates', [AssociateController::class, 'store'])->name('associa
 Route::get('/learning-hub', [LearningHubController::class, 'index'])->name('learning-hub.index');
 Route::get('/learning-hub/{post}', [LearningHubController::class, 'show'])->name('learning-hub.blog');
 
-Route::view('/login', 'pages.coming-soon', ['title' => 'Login', 'message' => 'Entrepreneur and Business Associate login is part of the Bizacharya Phase 2 portal.'])->name('login');
-Route::view('/signup', 'pages.coming-soon', ['title' => 'Sign Up', 'message' => 'Entrepreneur and Business Associate sign-up is part of the Bizacharya Phase 2 portal.'])->name('signup');
-Route::view('/portal/entrepreneur-dashboard', 'pages.coming-soon', ['title' => 'Entrepreneur Dashboard', 'message' => 'The entrepreneur portal is part of the Bizacharya Phase 2 rollout.'])->name('portal.entrepreneur');
-Route::view('/portal/associate-dashboard', 'pages.coming-soon', ['title' => 'Business Associate Dashboard', 'message' => 'The Business Associate portal is part of the Bizacharya Phase 2 rollout.'])->name('portal.associate');
-Route::view('/portal/subscriber-learning-hub', 'pages.coming-soon', ['title' => 'Subscriber Learning Hub', 'message' => 'The premium subscriber Learning Hub is part of the Bizacharya Phase 2 rollout.'])->name('portal.learning-hub');
+Route::view('/login', 'pages.auth.login')->name('login');
+Route::view('/signup', 'pages.auth.signup')->name('signup');
+Route::view('/portal/entrepreneur-dashboard', 'pages.portal.entrepreneur-dashboard')->name('portal.entrepreneur');
+Route::view('/portal/associate-dashboard', 'pages.portal.associate-dashboard')->name('portal.associate');
+Route::view('/portal/subscriber-learning-hub', 'pages.portal.subscriber-learning-hub')->name('portal.learning-hub');

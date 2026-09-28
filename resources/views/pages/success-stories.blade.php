@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
-@section('title', 'Entrepreneurs We Empowered | Bizacharya Success Stories')
-@section('description', 'Real stories from entrepreneurs across Kerala who built their businesses with Bizacharya.')
+@section('title', 'Success Stories — Entrepreneurs We Empowered | Bizacharya')
+@section('description', 'Success stories of entrepreneurs across Kerala who started, registered, funded and grew their businesses with guidance from Bizacharya.')
 
 @section('content')
 <section class="page-banner">
@@ -29,7 +29,7 @@
               @if ($story->photo)
                 <div class="ph ph--circle story-card__avatar"><img src="{{ asset('storage/'.$story->photo) }}" alt="{{ $story->name }}"></div>
               @else
-                <div class="ph ph--circle story-card__avatar" role="img" aria-label="Portrait of {{ $story->name }}"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></div>
+                <div class="ph ph--circle story-card__avatar" role="img" aria-label="{{ $story->avatar_label ?: 'Portrait of '.$story->name }}"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></div>
               @endif
               <span><strong>{{ $story->headline }}</strong><span class="story-card__name">{{ $story->name }}@if($story->location), {{ $story->location }}@endif</span></span>
             </footer></article></div>
@@ -67,7 +67,7 @@
               @if ($story->photo)
                 <div class="ph ph--circle story-card__avatar"><img src="{{ asset('storage/'.$story->photo) }}" alt="{{ $story->name }}"></div>
               @else
-                <div class="ph ph--circle story-card__avatar" role="img" aria-label="Portrait of {{ $story->name }}"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></div>
+                <div class="ph ph--circle story-card__avatar" role="img" aria-label="{{ $story->avatar_label ?: 'Portrait of '.$story->name }}"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></div>
               @endif
               <span><strong>{{ $story->headline }}</strong><span class="story-card__name">{{ $story->name }}@if($story->location), {{ $story->location }}@endif</span></span>
             </footer>

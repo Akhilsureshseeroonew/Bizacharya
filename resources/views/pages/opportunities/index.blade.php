@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
-@section('title', 'Entrepreneurship Opportunities | Bizacharya')
-@section('description', 'Explore business opportunities and dedicated support pathways designed to help entrepreneurs start, build, and grow across Kerala.')
+@section('title', 'Entrepreneurship Opportunities in Kerala | Bizacharya')
+@section('description', 'Explore the entrepreneurship opportunities Bizacharya supports across Kerala — financial services, agri-business, rural enterprises, women entrepreneurship, startups and SME/MSME development.')
 
 @section('content')
 <section class="page-banner page-banner--center">

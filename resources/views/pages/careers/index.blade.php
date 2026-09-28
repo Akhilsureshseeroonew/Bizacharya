@@ -48,7 +48,7 @@
   </div>
 </section>
 
-<section class="section" id="openings">
+<section class="section" id="openings" data-watermark="corner-tr">
   <div class="container">
     <div class="section-head section-head--center" data-reveal>
       <p class="eyebrow">Open Positions</p>

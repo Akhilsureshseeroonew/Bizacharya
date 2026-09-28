@@ -1,7 +1,7 @@
 @props(['slug'])
 @switch($slug)
   @case('financial-services')
-    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M15 9.4c0-1.3-1.3-2.4-3-2.4s-3 1-3 2.3 1.3 1.9 3 2.4 3 1 3 2.4-1.3 2.3-3 2.3-3-1-3-2.3"/></svg>
+    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M8.5 7.5h7M8.5 10.5h7M10.5 7.5a3 3 0 0 1 0 6h-2l5 4.5"/></svg>
     @break
   @case('agri-business')
     <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-11 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 11 15 11 15"/></svg>

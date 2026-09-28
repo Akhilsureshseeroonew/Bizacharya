@@ -13,6 +13,42 @@
   </div>
 </section>
 
+@if ($sector->slug === 'financial-services')
+<section class="section financial-intro">
+  <div class="container">
+    <div class="row grid-gap align-items-center">
+      <div class="col-lg-5">
+        <div class="about-split__media">
+          <span class="about-split__blob" aria-hidden="true"></span>
+          <figure class="about-split__photo"><img src="{{ asset('assets/img/about/institutions.jpg') }}" alt="Advisor reviewing financial paperwork with a client at the table" width="600" height="600" loading="lazy"></figure>
+          <div class="about-split__badge">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M8.5 7.5h7M8.5 10.5h7M10.5 7.5a3 3 0 0 1 0 6h-2l5 4.5"/></svg>
+            <span>{{ $sector->title }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <p class="eyebrow">{{ $sector->title }}</p>
+        {!! $sector->intro !!}
+      </div>
+    </div>
+  </div>
+</section>
+@elseif ($sector->slug === 'women-entrepreneurship')
+<section class="section">
+  <div class="container">
+    <div class="sector-intro">
+      <div class="sector-intro__text">
+        <p class="eyebrow">{{ $sector->title }}</p>
+        {!! $sector->intro !!}
+      </div>
+      <div class="sector-intro__media">
+        <figure class="sector-intro__photo"><img src="{{ asset('assets/img/opportunities/women-entrepreneurship-laptop.jpg') }}" alt="A woman entrepreneur smiling while working on her laptop at a desk" width="830" height="440" loading="lazy"></figure>
+      </div>
+    </div>
+  </div>
+</section>
+@else
 <section class="section">
   <div class="container">
     <div class="sector-intro sector-intro--square">
@@ -28,6 +64,7 @@
     </div>
   </div>
 </section>
+@endif
 
 <section class="section section--light section--pattern-dark">
   <div class="container">
