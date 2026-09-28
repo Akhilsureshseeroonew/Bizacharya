@@ -45,7 +45,6 @@ Route::view('/portal/entrepreneur-dashboard', 'pages.portal.entrepreneur-dashboa
 Route::view('/portal/associate-dashboard', 'pages.portal.associate-dashboard')->name('portal.associate');
 Route::view('/portal/subscriber-learning-hub', 'pages.portal.subscriber-learning-hub')->name('portal.learning-hub');
 
-// Catch-all for admin-created generic pages — must stay last so it never
-// shadows a specific route above (e.g. /about, /careers). See
-// PageAdminController for how these are created and locked.
-Route::get('/{page:slug}', [PageController::class, 'show'])->name('pages.show');
+Route::get('/{page:slug}', [PageController::class, 'show'])
+    ->where('page', '^(?!bizacharya-admin(?:/|$)).+')
+    ->name('pages.show');
