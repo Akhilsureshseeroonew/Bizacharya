@@ -19,4 +19,11 @@ class PageController extends Controller
 
         return view('pages.contact', compact('page'));
     }
+
+    public function show(Page $page)
+    {
+        abort_unless($page->template === 'standard' && $page->is_published, 404);
+
+        return view('pages.generic', compact('page'));
+    }
 }

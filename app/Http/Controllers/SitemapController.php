@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\JobOpening;
+use App\Models\Page;
 use App\Models\Post;
 use App\Models\Sector;
 use App\Models\Service;
@@ -28,7 +29,8 @@ class SitemapController extends Controller
             ->concat(Service::published()->get()->map(fn ($s) => ['loc' => $s->url(), 'priority' => '0.7']))
             ->concat(Event::published()->get()->map(fn ($e) => ['loc' => $e->url(), 'priority' => '0.5']))
             ->concat(JobOpening::open()->get()->map(fn ($j) => ['loc' => $j->url(), 'priority' => '0.5']))
-            ->concat(Post::published()->category('blog')->get()->map(fn ($p) => ['loc' => $p->url(), 'priority' => '0.5']));
+            ->concat(Post::published()->category('blog')->get()->map(fn ($p) => ['loc' => $p->url(), 'priority' => '0.5']))
+            ->concat(Page::published()->generic()->get()->map(fn ($p) => ['loc' => $p->url(), 'priority' => '0.4']));
 
         $xml = view('sitemap', compact('urls'))->render();
 

@@ -3,10 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Page;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 /**
- * Only 3 fixed rows exist (home/about/contact) — routes only register
- * index/edit/update (see routes/web.php), no create/destroy.
+ * Home/About/Contact are 3 fixed, hand-designed rows (template = 'home' /
+ * 'about' / 'contact', each with its own bespoke Blade view) — they can be
+ * edited but never deleted or re-slugged here. Any other row is a generic,
+ * fully admin-created page (template = 'standard', the column default),
+ * rendered by resources/views/pages/generic.blade.php at GET /{slug}
+ * (see the catch-all route at the bottom of routes/web.php).
  */
 class PageAdminController extends ResourceController
 {
@@ -22,7 +28,17 @@ class PageAdminController extends ResourceController
 
     protected array $columns = ['slug', 'title', 'is_published'];
 
+    protected const CORE_SLUGS = ['home', 'about', 'contact'];
+
+    /** Top-level URL segments already used by real routes — a generic page can't take one of these. */
+    protected const RESERVED_SLUGS = [
+        'home', 'about', 'contact', 'opportunities', 'services', 'success-stories',
+        'community', 'careers', 'learning-hub', 'learning', 'login', 'signup', 'portal',
+        'sitemap.xml', 'sitemap', 'enquiry', 'associates', 'bizacharya-admin', 'storage', 'assets',
+    ];
+
     protected array $fields = [
+        ['name' => 'slug', 'label' => 'URL slug', 'type' => 'text', 'required' => true, 'help' => 'Lowercase letters, numbers and dashes only, e.g. privacy-policy → shown at /privacy-policy. Locked for Home/About/Contact.'],
         ['name' => 'title', 'label' => 'Title', 'type' => 'text', 'required' => true],
         ['name' => 'menu_label', 'label' => 'Menu label (optional)', 'type' => 'text'],
         ['name' => 'hero_eyebrow', 'label' => 'Hero eyebrow (optional)', 'type' => 'text'],
@@ -57,4 +73,59 @@ class PageAdminController extends ResourceController
         ['name' => 'seo_description', 'label' => 'SEO description (optional)', 'type' => 'textarea'],
         ['name' => 'is_published', 'label' => 'Published', 'type' => 'checkbox'],
     ];
+
+    protected function rules($item = null): array
+    {
+        $rules = parent::rules($item);
+
+        $rules['slug'] = [
+            'required', 'string', 'max:191', 'alpha_dash',
+            Rule::unique('pages', 'slug')->ignore($item?->id),
+        ];
+
+        if (! $item || ! in_array($item->slug, self::CORE_SLUGS, true)) {
+            $rules['slug'][] = Rule::notIn(self::RESERVED_SLUGS);
+        }
+
+        return $rules;
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate($this->rules());
+
+        $item = new Page(['template' => 'standard']);
+        $this->fill($item, $request);
+        $item->save();
+
+        return redirect()->route('admin.pages.index')->with('status', 'Page created.');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $item = Page::findOrFail($id);
+
+        $request->validate($this->rules($item));
+
+        $isCore = in_array($item->slug, self::CORE_SLUGS, true);
+        if ($isCore) {
+            $request->merge(['slug' => $item->slug]);
+        }
+
+        $this->fill($item, $request);
+        $item->save();
+
+        return redirect()->route('admin.pages.index')->with('status', 'Page updated.');
+    }
+
+    public function destroy($id)
+    {
+        $item = Page::findOrFail($id);
+
+        abort_if(in_array($item->slug, self::CORE_SLUGS, true), 403, 'Home, About, and Contact cannot be deleted — they have dedicated code behind them.');
+
+        $item->delete();
+
+        return redirect()->route('admin.pages.index')->with('status', 'Page deleted.');
+    }
 }

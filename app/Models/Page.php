@@ -30,4 +30,14 @@ class Page extends Model
     {
         return $query->where('is_published', true);
     }
+
+    public function scopeGeneric($query)
+    {
+        return $query->where('template', 'standard');
+    }
+
+    public function url(): string
+    {
+        return url($this->slug);
+    }
 }

@@ -29,7 +29,7 @@ Route::prefix('bizacharya-admin')->name('admin.')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-        Route::resource('pages', PageAdminController::class)->only(['index', 'edit', 'update']);
+        Route::resource('pages', PageAdminController::class)->except(['show']);
         Route::resource('menu-items', MenuItemAdminController::class)->except(['show']);
         Route::resource('sectors', SectorAdminController::class)->except(['show']);
         Route::resource('services', ServiceAdminController::class)->except(['show']);
