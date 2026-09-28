@@ -14,6 +14,7 @@ class Event extends Model
             'event_date' => 'date',
             'gallery' => 'array',
             'highlights' => 'array',
+            'audience' => 'array',
             'registration_open' => 'boolean',
             'is_published' => 'boolean',
             'published_at' => 'datetime',

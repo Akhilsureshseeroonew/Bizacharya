@@ -6,7 +6,9 @@
 
 @section('content')
 <section class="hero" id="hero">
-  <div class="hero__bg" aria-hidden="true"></div>
+  <div class="hero__bg" aria-hidden="true">
+    <div class="hero__bg-slide is-active" style="background-image: url('{{ asset('assets/img/hero_bg.png') }}')"></div>
+  </div>
   <div class="container hero__inner">
     <div class="hero__content">
       <h1>{!! $page->hero_heading !!}</h1>
@@ -84,7 +86,7 @@
 </section>
 @endif
 
-<section class="section journey" id="journey">
+<section class="section journey" id="journey" data-no-watermark>
   <img class="journey__watermark" src="{{ asset('assets/img/logo-mark.png') }}" alt="" aria-hidden="true" loading="lazy">
   <div class="container">
     <div class="section-head section-head--center" data-reveal>
@@ -165,6 +167,10 @@
               </a>
             @endforeach
           </div>
+        </div>
+        <div class="service-marquee__nav">
+          <button class="service-marquee__arrow" type="button" data-marquee-prev aria-label="Previous services"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg></button>
+          <button class="service-marquee__arrow" type="button" data-marquee-next aria-label="Next services"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg></button>
         </div>
       </div>
     </div>

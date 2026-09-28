@@ -313,9 +313,11 @@ class DesignContentSeeder extends Seeder
                 'slug' => 'business-plan-workshop-first-time-founders', 'title' => 'Business Plan Workshop for First-Time Founders',
                 'status' => 'upcoming', 'tag_label' => 'Workshop', 'filter_category' => 'workshop', 'banner_image' => 'events/business-plan-workshop.jpg', 'event_date' => '2026-10-12', 'event_time' => '9:30 AM – 4:30 PM',
                 'venue' => 'Thrissur, Kerala', 'venue_full' => 'First Floor, Athikavil Complex, Urakam, Thrissur, Kerala – 680562',
-                'summary' => 'A hands-on, one-day workshop in Thrissur covering business models, basic financial projections and how to present a plan to a bank.',
-                'body' => '<p>A hands-on, one-day workshop for aspiring and first-time founders across Kerala. Bring your business idea and leave with a structured plan: a clear business model, a first set of financial projections and an understanding of what a bank or investor expects to see.</p><h3>Who should attend</h3><p>Aspiring entrepreneurs, students, working professionals planning a venture, and early-stage founders who want to formalise their plan. Seats are limited to keep the session interactive.</p>',
+                'summary' => 'One hands-on day. Bring an idea, leave with a structured business plan, first financial projections and a clear next step.',
+                'about_heading' => 'A working session, not a lecture',
+                'body' => '<p>A hands-on, one-day workshop for aspiring and first-time founders across Kerala. Bring your business idea and leave with a structured plan: a clear business model, a first set of financial projections and an understanding of what a bank or investor expects to see.</p>',
                 'highlights' => ['Validating your idea and identifying the right customer segment', 'Building a simple business model and pricing logic', 'Preparing basic financial projections and a project report outline', 'Choosing a legal structure and understanding first-year compliance', 'Q&A and one-to-one feedback from Bizacharya mentors'],
+                'audience' => ['Aspiring entrepreneurs', 'Students', 'Working professionals planning a venture', 'Early-stage founders who want to formalise their plan'],
             ],
             [
                 'slug' => 'msme-udyam-registration-webinar', 'title' => 'MSME Registration & Udyam: What Every Small Business Should Know',
