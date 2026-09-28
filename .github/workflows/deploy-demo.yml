@@ -1,0 +1,62 @@
+name: Deploy Bizacharya Demo
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to Demo Server
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script_stop: true
+
+          script: |
+            set -e
+
+            echo "========================================"
+            echo "Starting Bizacharya Demo Deployment"
+            echo "========================================"
+
+            cd /var/www/bizacharya
+
+            echo "Updating source code..."
+            git fetch origin main
+            git reset --hard origin/main
+
+            echo "Installing PHP dependencies..."
+            composer install --no-dev --optimize-autoloader
+
+            echo "Installing frontend dependencies..."
+            npm ci
+
+            echo "Building frontend..."
+            npm run build
+
+            echo "Running database migrations..."
+            php artisan migrate --force
+
+            echo "Ensuring storage link..."
+            php artisan storage:link || true
+
+            echo "Clearing Laravel caches..."
+            php artisan optimize:clear
+
+            echo "Optimizing Laravel..."
+            php artisan optimize
+
+            echo "Fixing writable directory permissions..."
+            chown -R deploy:www-data storage bootstrap/cache
+            chmod -R 775 storage bootstrap/cache
+
+            echo "========================================"
+            echo "Bizacharya Demo Deployment Completed"
+            echo "========================================"
