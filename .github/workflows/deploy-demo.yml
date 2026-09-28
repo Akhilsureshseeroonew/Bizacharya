@@ -17,7 +17,6 @@ jobs:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_SSH_KEY }}
-          script_stop: true
 
           script: |
             set -e
@@ -54,8 +53,8 @@ jobs:
             php artisan optimize
 
             echo "Fixing writable directory permissions..."
-            chown -R deploy:www-data storage bootstrap/cache
-            chmod -R 775 storage bootstrap/cache
+            find storage bootstrap/cache -type d -exec chmod 2775 {} \;
+            find storage bootstrap/cache -type f -exec chmod 664 {} \;
 
             echo "========================================"
             echo "Bizacharya Demo Deployment Completed"
