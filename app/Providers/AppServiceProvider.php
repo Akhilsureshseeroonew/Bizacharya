@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Associate;
+use App\Models\Enquiry;
+use App\Models\EventRegistration;
+use App\Models\JobApplication;
 use App\Models\MenuItem;
 use App\Models\Sector;
 use App\Models\Service;
@@ -36,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $this->registerNavComposer();
+        $this->registerAdminSidebarComposer();
     }
 
     protected function overrideSiteConfig(): void
@@ -61,6 +66,27 @@ class AppServiceProvider extends ServiceProvider
                     'navSectors' => collect(), 'navServices' => collect(),
                     'navHeaderBefore' => collect(), 'navHeaderAfter' => collect(), 'navFooterQuick' => collect(),
                 ]);
+            }
+        });
+    }
+
+    /**
+     * "New" lead counts shown as badges next to the sidebar's Leads links, so a
+     * non-technical admin sees there's something to look at without first opening
+     * the Dashboard. Same counts DashboardController shows on the dashboard cards.
+     */
+    protected function registerAdminSidebarComposer(): void
+    {
+        $this->app['view']->composer('admin.layout', function (View $view) {
+            try {
+                $view->with('sidebarNewCounts', [
+                    'enquiries' => Enquiry::where('status', 'new')->count(),
+                    'job-applications' => JobApplication::where('status', 'new')->count(),
+                    'associates' => Associate::where('status', 'new')->count(),
+                    'event-registrations' => EventRegistration::whereNull('viewed_at')->count(),
+                ]);
+            } catch (\Throwable) {
+                $view->with('sidebarNewCounts', []);
             }
         });
     }

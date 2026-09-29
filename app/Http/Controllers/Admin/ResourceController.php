@@ -37,6 +37,18 @@ abstract class ResourceController extends Controller
     /** @var array<int, string> */
     protected array $columns = [];
 
+    /**
+     * The field list to actually show/validate/save for a given item. Defaults to
+     * every field. Overridden by PageAdminController, whose fields carry a 'page'
+     * tag (Home/About/Contact only apply to their own row) — rules()/fill()/the
+     * form all go through this, so a field hidden from the form is never blanked
+     * out by save() the way a field simply absent from the request would be.
+     */
+    protected function visibleFields($item): array
+    {
+        return $this->fields;
+    }
+
     public function index(Request $request)
     {
         $query = $this->model::query();
@@ -60,9 +72,11 @@ abstract class ResourceController extends Controller
 
     public function create()
     {
+        $item = new $this->model;
+
         return view('admin.resource.form', [
-            'item' => new $this->model,
-            'fields' => $this->fields,
+            'item' => $item,
+            'fields' => $this->visibleFields($item),
             'routeBase' => $this->routeBase,
             'title' => $this->title,
         ]);
@@ -85,7 +99,7 @@ abstract class ResourceController extends Controller
 
         return view('admin.resource.form', [
             'item' => $item,
-            'fields' => $this->fields,
+            'fields' => $this->visibleFields($item),
             'routeBase' => $this->routeBase,
             'title' => $this->title,
         ]);
@@ -114,7 +128,7 @@ abstract class ResourceController extends Controller
     {
         $rules = [];
 
-        foreach ($this->fields as $field) {
+        foreach ($this->visibleFields($item ?? new $this->model) as $field) {
             if (isset($field['rules'])) {
                 $rules[$field['name']] = $field['rules'];
                 continue;
@@ -125,9 +139,14 @@ abstract class ResourceController extends Controller
                 'number' => 'numeric',
                 'checkbox' => 'boolean',
                 'date' => 'date',
-                'image', 'file' => 'file',
+                // Kept deliberately small — this is an admin upload, not a public one, but an
+                // oversized or unexpected file type still bloats storage and slows the page down
+                // for every visitor who loads it. jpg/png/webp cover every real use here.
+                'image' => 'file|mimes:jpg,jpeg,png,webp|max:2048',
+                'file' => 'file|mimes:pdf,doc,docx|max:10240',
                 'select' => 'string',
                 'list', 'pairs', 'json' => 'string',
+                'fixed-pairs' => 'array',
                 default => 'string',
             };
 
@@ -139,7 +158,7 @@ abstract class ResourceController extends Controller
 
     protected function fill($item, Request $request): void
     {
-        foreach ($this->fields as $field) {
+        foreach ($this->visibleFields($item) as $field) {
             $name = $field['name'];
 
             switch ($field['type']) {
@@ -151,6 +170,16 @@ abstract class ResourceController extends Controller
                     break;
                 case 'pairs':
                     $item->{$name} = $this->linesToPairs($request->input($name));
+                    break;
+                case 'fixed-pairs':
+                    // A fixed number of {value, text} slots (e.g. Home's 6-step
+                    // Journey), submitted as journey_steps[0][value] etc. rather
+                    // than a "one per line" textarea. Blank slots are dropped.
+                    $item->{$name} = collect($request->input($name, []))
+                        ->map(fn ($row) => ['value' => trim($row['value'] ?? ''), 'text' => trim($row['text'] ?? '')])
+                        ->filter(fn ($row) => $row['value'] !== '' || $row['text'] !== '')
+                        ->values()
+                        ->all();
                     break;
                 case 'json':
                     $decoded = json_decode((string) $request->input($name), true);

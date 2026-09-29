@@ -44,7 +44,7 @@ class EventAdminController extends ResourceController
         ['name' => 'organizer', 'label' => 'Organizer (optional)', 'type' => 'text'],
         ['name' => 'summary', 'label' => 'Short summary (used on cards + detail page intro)', 'type' => 'textarea', 'required' => true],
         ['name' => 'about_heading', 'label' => 'About section heading (optional)', 'type' => 'text', 'help' => 'Defaults to "About the event" if left blank.'],
-        ['name' => 'body', 'label' => 'About the event (HTML)', 'type' => 'richtext'],
+        ['name' => 'body', 'label' => 'About the event', 'type' => 'richtext'],
         ['name' => 'highlights', 'label' => '"What you will cover" (one per line)', 'type' => 'list'],
         ['name' => 'audience', 'label' => '"Who should attend" (one per line)', 'type' => 'list'],
         ['name' => 'banner_image', 'label' => 'Banner image', 'type' => 'image'],

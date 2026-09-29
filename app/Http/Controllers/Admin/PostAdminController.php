@@ -32,7 +32,7 @@ class PostAdminController extends ResourceController
             'literacy' => 'Financial Literacy (video)',
         ]],
         ['name' => 'excerpt', 'label' => 'Excerpt / card description', 'type' => 'textarea', 'required' => true],
-        ['name' => 'body', 'label' => 'Body (HTML, blog posts only)', 'type' => 'richtext'],
+        ['name' => 'body', 'label' => 'Body (blog articles only)', 'type' => 'richtext'],
         ['name' => 'cover_image', 'label' => 'Cover image', 'type' => 'image'],
         ['name' => 'file_path', 'label' => 'Downloadable file (guides only)', 'type' => 'file'],
         ['name' => 'external_url', 'label' => 'External URL (government schemes only)', 'type' => 'text'],

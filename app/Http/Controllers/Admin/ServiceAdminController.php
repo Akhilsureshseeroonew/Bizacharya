@@ -25,7 +25,7 @@ class ServiceAdminController extends ResourceController
         ['name' => 'summary', 'label' => 'Short summary (used on listing cards)', 'type' => 'textarea', 'required' => true],
         ['name' => 'hero_heading', 'label' => 'Detail page headline', 'type' => 'text', 'required' => true],
         ['name' => 'hero_lead', 'label' => 'Detail page intro line', 'type' => 'textarea'],
-        ['name' => 'intro', 'label' => 'Intro body (HTML paragraphs)', 'type' => 'richtext'],
+        ['name' => 'intro', 'label' => 'Intro body', 'type' => 'richtext'],
         ['name' => 'what_we_offer', 'label' => 'What We Offer (one per line)', 'type' => 'list'],
         ['name' => 'impact_quote', 'label' => 'Our Impact quote (optional)', 'type' => 'textarea'],
         ['name' => 'image', 'label' => 'Photo', 'type' => 'image'],

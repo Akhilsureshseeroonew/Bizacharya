@@ -14,9 +14,9 @@ class DashboardController extends Controller
     {
         $counts = [
             'Enquiries' => ['total' => Enquiry::count(), 'new' => Enquiry::where('status', 'new')->count(), 'route' => 'admin.enquiries.index'],
-            'Event Registrations' => ['total' => EventRegistration::count(), 'new' => null, 'route' => 'admin.event-registrations.index'],
+            'Event Sign-ups' => ['total' => EventRegistration::count(), 'new' => EventRegistration::whereNull('viewed_at')->count(), 'route' => 'admin.event-registrations.index'],
             'Job Applications' => ['total' => JobApplication::count(), 'new' => JobApplication::where('status', 'new')->count(), 'route' => 'admin.job-applications.index'],
-            'Associate Registrations' => ['total' => Associate::count(), 'new' => Associate::where('status', 'new')->count(), 'route' => 'admin.associates.index'],
+            'Associate Sign-ups' => ['total' => Associate::count(), 'new' => Associate::where('status', 'new')->count(), 'route' => 'admin.associates.index'],
         ];
 
         return view('admin.dashboard', compact('counts'));

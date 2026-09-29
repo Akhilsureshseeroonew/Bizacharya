@@ -37,79 +37,95 @@ class PageAdminController extends ResourceController
         'sitemap.xml', 'sitemap', 'enquiry', 'associates', 'bizacharya-admin', 'storage', 'assets',
     ];
 
+    /**
+     * Only show/validate/save fields tagged for this page's own slug (or fields
+     * with no 'page' tag, which apply everywhere). Critical: rules()/fill() route
+     * through this too, not just the form — a field the form never rendered must
+     * never be treated as "submitted empty" and overwritten with null.
+     */
+    protected function visibleFields($item): array
+    {
+        return array_values(array_filter($this->fields, function ($field) use ($item) {
+            return empty($field['page']) || ($item->slug ?? null) === $field['page'];
+        }));
+    }
+
     protected array $fields = [
-        ['name' => 'slug', 'label' => 'URL slug', 'type' => 'text', 'required' => true, 'help' => 'Lowercase letters, numbers and dashes only, e.g. privacy-policy → shown at /privacy-policy. Locked for Home/About/Contact.'],
-        ['name' => 'title', 'label' => 'Title', 'type' => 'text', 'required' => true],
-        ['name' => 'menu_label', 'label' => 'Menu label (optional)', 'type' => 'text'],
-        ['name' => 'hero_eyebrow', 'label' => 'Hero eyebrow (optional)', 'type' => 'text'],
-        ['name' => 'hero_heading', 'label' => 'Hero heading (HTML allowed)', 'type' => 'text'],
-        ['name' => 'hero_lead', 'label' => 'Hero intro line', 'type' => 'textarea'],
-        ['name' => 'body', 'label' => 'Body (HTML)', 'type' => 'richtext'],
+        // Shown for every page (Home, About, Contact, and any page you create).
+        ['name' => 'slug', 'label' => 'Web address', 'type' => 'text', 'required' => true, 'section' => 'Basics', 'help' => 'Lowercase letters, numbers and dashes only, e.g. privacy-policy → shown at yoursite.com/privacy-policy. Fixed for Home/About/Contact.'],
+        ['name' => 'title', 'label' => 'Page title', 'type' => 'text', 'required' => true, 'section' => 'Basics'],
+        ['name' => 'menu_label', 'label' => 'Menu label (optional — only if this text should differ from the Page title above)', 'type' => 'text', 'section' => 'Basics'],
+        ['name' => 'hero_eyebrow', 'label' => 'Small label above the heading (optional)', 'type' => 'text', 'section' => 'Top Banner'],
+        ['name' => 'hero_heading', 'label' => 'Main heading', 'type' => 'text', 'section' => 'Top Banner'],
+        ['name' => 'hero_lead', 'label' => 'Intro line under the heading', 'type' => 'textarea', 'section' => 'Top Banner'],
+        ['name' => 'body', 'label' => 'Main content', 'type' => 'richtext', 'section' => 'Main Content'],
+        ['name' => 'seo_title', 'label' => 'Google search result title (optional)', 'type' => 'text', 'section' => 'Search Engines (SEO)'],
+        ['name' => 'seo_description', 'label' => 'Google search result description (optional)', 'type' => 'textarea', 'section' => 'Search Engines (SEO)'],
+        ['name' => 'is_published', 'label' => 'Visible on the live site', 'type' => 'checkbox', 'section' => 'Visibility'],
 
-        ['name' => 'hero_subtitle', 'label' => '[Home only] Hero subtitle (small line under the H1)', 'type' => 'text'],
-        ['name' => 'hero_cta_label', 'label' => '[Home only] Hero primary button label', 'type' => 'text'],
-        ['name' => 'hero_cta2_label', 'label' => '[Home only] Hero secondary (call) button label', 'type' => 'text'],
-        ['name' => 'journey_steps', 'label' => '[Home only] "Your Journey" steps — one per line as "Title | Description"', 'type' => 'pairs', 'help' => 'e.g. "Discover | Identify strengths and business opportunities."'],
-        ['name' => 'vision_text', 'label' => '[Home only] Vision statement', 'type' => 'textarea'],
-        ['name' => 'mission_text', 'label' => '[Home only] Mission statement', 'type' => 'textarea'],
-        ['name' => 'hero_stats', 'label' => '[Home only] Hero stat badges — one per line as "Line 1 | Line 2"', 'type' => 'pairs', 'help' => 'Exactly 4, e.g. "Guiding | Entrepreneurs"'],
-        ['name' => 'vm_words', 'label' => '[Home only] Vision/Mission graphic centre words (one per line)', 'type' => 'list', 'help' => 'Exactly 3, e.g. People / Business / A Stronger Kerala'],
+        // Home page only.
+        ['name' => 'hero_subtitle', 'label' => 'Small line under the heading', 'type' => 'text', 'page' => 'home', 'section' => 'Top Banner'],
+        ['name' => 'hero_cta_label', 'label' => 'Main button text', 'type' => 'text', 'page' => 'home', 'section' => 'Top Banner'],
+        ['name' => 'hero_cta2_label', 'label' => '"Call us" button text', 'type' => 'text', 'page' => 'home', 'section' => 'Top Banner'],
+        ['name' => 'hero_stats', 'label' => 'The 4 number badges over the banner image', 'type' => 'pairs', 'page' => 'home', 'section' => 'Top Banner', 'max' => 4, 'help' => 'e.g. "Guiding" / "Entrepreneurs"'],
 
-        ['name' => 'events_eyebrow', 'label' => '[Home only] "Upcoming Events" section eyebrow', 'type' => 'text'],
-        ['name' => 'events_heading', 'label' => '[Home only] "Upcoming Events" section heading', 'type' => 'text'],
-        ['name' => 'events_intro', 'label' => '[Home only] "Upcoming Events" section intro', 'type' => 'textarea'],
+        ['name' => 'events_eyebrow', 'label' => 'Small label', 'type' => 'text', 'page' => 'home', 'section' => 'Upcoming Events (near the top)'],
+        ['name' => 'events_heading', 'label' => 'Heading', 'type' => 'text', 'page' => 'home', 'section' => 'Upcoming Events (near the top)'],
+        ['name' => 'events_intro', 'label' => 'Intro line', 'type' => 'textarea', 'page' => 'home', 'section' => 'Upcoming Events (near the top)'],
 
-        ['name' => 'journey_eyebrow', 'label' => '[Home only] "Your Journey" section eyebrow', 'type' => 'text'],
-        ['name' => 'journey_heading', 'label' => '[Home only] "Your Journey" section heading', 'type' => 'text'],
-        ['name' => 'journey_intro', 'label' => '[Home only] "Your Journey" section intro', 'type' => 'textarea'],
+        ['name' => 'journey_eyebrow', 'label' => 'Small label', 'type' => 'text', 'page' => 'home', 'section' => 'Your Journey (6-step roadmap)'],
+        ['name' => 'journey_heading', 'label' => 'Heading', 'type' => 'text', 'page' => 'home', 'section' => 'Your Journey (6-step roadmap)'],
+        ['name' => 'journey_intro', 'label' => 'Intro line', 'type' => 'textarea', 'page' => 'home', 'section' => 'Your Journey (6-step roadmap)'],
+        ['name' => 'journey_steps', 'label' => 'The 6 steps', 'type' => 'fixed-pairs', 'count' => 6, 'page' => 'home', 'section' => 'Your Journey (6-step roadmap)', 'help' => 'Fill in a Title + Description for all 6, or leave all 6 blank to hide this section — the graphic is a fixed 6-step layout.'],
 
-        ['name' => 'sectors_eyebrow', 'label' => '[Home only] "Sectors" section eyebrow', 'type' => 'text'],
-        ['name' => 'sectors_heading', 'label' => '[Home only] "Sectors" section heading', 'type' => 'text'],
-        ['name' => 'sectors_intro', 'label' => '[Home only] "Sectors" section intro', 'type' => 'textarea'],
+        ['name' => 'sectors_eyebrow', 'label' => 'Small label', 'type' => 'text', 'page' => 'home', 'section' => 'Sectors We Support'],
+        ['name' => 'sectors_heading', 'label' => 'Heading', 'type' => 'text', 'page' => 'home', 'section' => 'Sectors We Support'],
+        ['name' => 'sectors_intro', 'label' => 'Intro line', 'type' => 'textarea', 'page' => 'home', 'section' => 'Sectors We Support'],
 
-        ['name' => 'services_eyebrow', 'label' => '[Home only] "Services" section eyebrow', 'type' => 'text'],
-        ['name' => 'services_heading', 'label' => '[Home only] "Services" section heading', 'type' => 'text'],
-        ['name' => 'services_intro', 'label' => '[Home only] "Services" section intro', 'type' => 'textarea'],
-        ['name' => 'services_cta_label', 'label' => '[Home only] "Speak With an Advisor" button label (reused in the Services and closing CTA sections)', 'type' => 'text'],
+        ['name' => 'services_eyebrow', 'label' => 'Small label', 'type' => 'text', 'page' => 'home', 'section' => 'Services We Offer'],
+        ['name' => 'services_heading', 'label' => 'Heading', 'type' => 'text', 'page' => 'home', 'section' => 'Services We Offer'],
+        ['name' => 'services_intro', 'label' => 'Intro line', 'type' => 'textarea', 'page' => 'home', 'section' => 'Services We Offer'],
+        ['name' => 'services_cta_label', 'label' => '"Speak with an advisor" button text (used here and further down the page)', 'type' => 'text', 'page' => 'home', 'section' => 'Services We Offer'],
 
-        ['name' => 'vm_eyebrow', 'label' => '[Home only] "Vision & Mission" section eyebrow', 'type' => 'text'],
-        ['name' => 'vm_heading', 'label' => '[Home only] "Vision & Mission" section heading (HTML allowed)', 'type' => 'text'],
+        ['name' => 'vm_eyebrow', 'label' => 'Small label', 'type' => 'text', 'page' => 'home', 'section' => 'Vision & Mission'],
+        ['name' => 'vm_heading', 'label' => 'Heading', 'type' => 'text', 'page' => 'home', 'section' => 'Vision & Mission'],
+        ['name' => 'vision_text', 'label' => 'Vision paragraph', 'type' => 'textarea', 'page' => 'home', 'section' => 'Vision & Mission'],
+        ['name' => 'mission_text', 'label' => 'Mission paragraph', 'type' => 'textarea', 'page' => 'home', 'section' => 'Vision & Mission'],
+        ['name' => 'vm_words', 'label' => 'The 3 words in the centre of the graphic', 'type' => 'list', 'page' => 'home', 'section' => 'Vision & Mission', 'max' => 3, 'help' => 'e.g. People, Business, A Stronger Kerala'],
 
-        ['name' => 'stories_eyebrow', 'label' => '[Home only] "Success Stories" section eyebrow', 'type' => 'text'],
-        ['name' => 'stories_heading', 'label' => '[Home only] "Success Stories" section heading (HTML allowed)', 'type' => 'text'],
-        ['name' => 'stories_intro', 'label' => '[Home only] "Success Stories" section intro', 'type' => 'textarea'],
+        ['name' => 'stories_eyebrow', 'label' => 'Small label', 'type' => 'text', 'page' => 'home', 'section' => 'Success Stories'],
+        ['name' => 'stories_heading', 'label' => 'Heading', 'type' => 'text', 'page' => 'home', 'section' => 'Success Stories'],
+        ['name' => 'stories_intro', 'label' => 'Intro line', 'type' => 'textarea', 'page' => 'home', 'section' => 'Success Stories'],
 
-        ['name' => 'strip_cta_lead', 'label' => '[Home only] Closing CTA band headline', 'type' => 'text'],
+        ['name' => 'strip_cta_lead', 'label' => 'Headline text', 'type' => 'text', 'page' => 'home', 'section' => '"Let\'s Discuss Your Business Idea" banner'],
 
-        ['name' => 'news_eyebrow', 'label' => '[Home only] "News & Events" section eyebrow', 'type' => 'text'],
-        ['name' => 'news_heading', 'label' => '[Home only] "News & Events" section heading', 'type' => 'text'],
-        ['name' => 'news_intro', 'label' => '[Home only] "News & Events" section intro', 'type' => 'textarea'],
+        ['name' => 'news_eyebrow', 'label' => 'Small label', 'type' => 'text', 'page' => 'home', 'section' => 'News & Events (near the bottom)'],
+        ['name' => 'news_heading', 'label' => 'Heading', 'type' => 'text', 'page' => 'home', 'section' => 'News & Events (near the bottom)'],
+        ['name' => 'news_intro', 'label' => 'Intro line', 'type' => 'textarea', 'page' => 'home', 'section' => 'News & Events (near the bottom)'],
 
-        ['name' => 'connect_eyebrow', 'label' => '[Home only] "Connect" (enquiry) section eyebrow', 'type' => 'text'],
-        ['name' => 'connect_heading', 'label' => '[Home only] "Connect" section heading', 'type' => 'text'],
-        ['name' => 'connect_intro', 'label' => '[Home only] "Connect" section intro', 'type' => 'textarea'],
-        ['name' => 'connect_aside_heading', 'label' => '[Home only] "Connect" side panel heading', 'type' => 'text'],
-        ['name' => 'connect_aside_intro', 'label' => '[Home only] "Connect" side panel intro', 'type' => 'textarea'],
+        ['name' => 'connect_eyebrow', 'label' => 'Small label', 'type' => 'text', 'page' => 'home', 'section' => 'Enquiry Form (bottom of page)'],
+        ['name' => 'connect_heading', 'label' => 'Heading', 'type' => 'text', 'page' => 'home', 'section' => 'Enquiry Form (bottom of page)'],
+        ['name' => 'connect_intro', 'label' => 'Intro line', 'type' => 'textarea', 'page' => 'home', 'section' => 'Enquiry Form (bottom of page)'],
+        ['name' => 'connect_aside_heading', 'label' => 'Side panel heading', 'type' => 'text', 'page' => 'home', 'section' => 'Enquiry Form (bottom of page)'],
+        ['name' => 'connect_aside_intro', 'label' => 'Side panel intro line', 'type' => 'textarea', 'page' => 'home', 'section' => 'Enquiry Form (bottom of page)'],
 
-        ['name' => 'timeline', 'label' => '[About only] "Our Journey" timeline — one per line as "Value | Description"', 'type' => 'pairs', 'help' => 'e.g. "17+ Years | Business Consulting & Advisory Experience"'],
-        ['name' => 'audience', 'label' => '[About only] "Today, we empower" list (one per line)', 'type' => 'list'],
-        ['name' => 'expertise', 'label' => '[About only] "Our Expertise" list (one per line)', 'type' => 'list'],
-        ['name' => 'leader_initials', 'label' => '[About only] Leader initials (avatar)', 'type' => 'text'],
-        ['name' => 'leader_name', 'label' => '[About only] Leader name', 'type' => 'text'],
-        ['name' => 'leader_title', 'label' => '[About only] Leader title (short, e.g. "Managing Director")', 'type' => 'text'],
-        ['name' => 'leader_role', 'label' => '[About only] Leader role (full, e.g. "Managing Director, Bizacharya Consulting Pvt. Ltd.")', 'type' => 'text'],
-        ['name' => 'leader_bio', 'label' => '[About only] Leader bio (HTML paragraphs)', 'type' => 'richtext'],
-        ['name' => 'leader_badges', 'label' => '[About only] Leader credential badges (one per line)', 'type' => 'list'],
-        ['name' => 'hero_badges', 'label' => '[About only] Hero stat badges (one per line)', 'type' => 'list', 'help' => 'Exactly 2, e.g. "54+ Financial Institutions"'],
-        ['name' => 'accent_words', 'label' => '[About only] Hero accent words (one per line)', 'type' => 'list', 'help' => 'Exactly 3, e.g. Strategy / People / Growth'],
-        ['name' => 'know_badge', 'label' => '[About only] "Beyond Corporate Advisory" badge text', 'type' => 'text'],
-        ['name' => 'cta_chain', 'label' => '[About only] Closing CTA chain steps (one per line)', 'type' => 'list', 'help' => 'e.g. Idea Validation, Business Registration, Funding, Compliance, Expansion, Long-Term Growth'],
+        // About page only.
+        ['name' => 'know_badge', 'label' => 'Small badge text over the team photo', 'type' => 'text', 'page' => 'about', 'section' => 'Top Banner'],
+        ['name' => 'hero_badges', 'label' => 'The 2 floating badges beside the photo', 'type' => 'list', 'page' => 'about', 'section' => 'Top Banner', 'max' => 2, 'help' => 'e.g. 54+ Financial Institutions'],
+        ['name' => 'accent_words', 'label' => 'The 3 words under the heading', 'type' => 'list', 'page' => 'about', 'section' => 'Top Banner', 'max' => 3, 'help' => 'e.g. Strategy, People, Growth'],
+        ['name' => 'timeline', 'label' => 'Milestones (title + description each)', 'type' => 'pairs', 'page' => 'about', 'section' => 'Our Journey Timeline', 'help' => 'e.g. "17+ Years" / "Business Consulting & Advisory Experience"'],
+        ['name' => 'audience', 'label' => 'Who we help (one per line)', 'type' => 'list', 'page' => 'about', 'section' => '"Today, We Empower" List'],
+        ['name' => 'expertise', 'label' => 'Expertise areas (one per line)', 'type' => 'list', 'page' => 'about', 'section' => '"Our Expertise" Grid'],
+        ['name' => 'leader_initials', 'label' => 'Initials shown on the avatar', 'type' => 'text', 'page' => 'about', 'section' => 'Leadership Profile', 'help' => 'Leave the whole Leadership Profile section blank to hide it.'],
+        ['name' => 'leader_name', 'label' => 'Name', 'type' => 'text', 'page' => 'about', 'section' => 'Leadership Profile'],
+        ['name' => 'leader_title', 'label' => 'Title (short, e.g. "Managing Director")', 'type' => 'text', 'page' => 'about', 'section' => 'Leadership Profile'],
+        ['name' => 'leader_role', 'label' => 'Title (full, e.g. "Managing Director, Bizacharya Consulting Pvt. Ltd.")', 'type' => 'text', 'page' => 'about', 'section' => 'Leadership Profile'],
+        ['name' => 'leader_bio', 'label' => 'Biography', 'type' => 'richtext', 'page' => 'about', 'section' => 'Leadership Profile'],
+        ['name' => 'leader_badges', 'label' => 'Credential badges (one per line)', 'type' => 'list', 'page' => 'about', 'section' => 'Leadership Profile'],
+        ['name' => 'cta_chain', 'label' => 'Steps shown in the closing banner (one per line)', 'type' => 'list', 'page' => 'about', 'section' => 'Closing Banner', 'help' => 'e.g. Idea Validation, Business Registration, Funding, Compliance, Expansion, Long-Term Growth'],
 
-        ['name' => 'facts_heading', 'label' => '[Contact only] "Contact Details" section heading — as "Line 1 | Line 2"', 'type' => 'pairs', 'help' => 'e.g. "We\'d Love to | Hear From You"'],
-
-        ['name' => 'seo_title', 'label' => 'SEO title (optional)', 'type' => 'text'],
-        ['name' => 'seo_description', 'label' => 'SEO description (optional)', 'type' => 'textarea'],
-        ['name' => 'is_published', 'label' => 'Published', 'type' => 'checkbox'],
+        // Contact page only.
+        ['name' => 'facts_heading', 'label' => 'Heading (title + accent word)', 'type' => 'pairs', 'page' => 'contact', 'section' => 'Contact Details Heading', 'help' => 'e.g. "We\'d Love to" / "Hear From You"'],
     ];
 
     protected function rules($item = null): array
@@ -124,6 +140,16 @@ class PageAdminController extends ResourceController
         if (! $item || ! in_array($item->slug, self::CORE_SLUGS, true)) {
             $rules['slug'][] = Rule::notIn(self::RESERVED_SLUGS);
         }
+
+        $rules['journey_steps'] = ['nullable', 'array', function ($attribute, $value, $fail) {
+            $filled = collect($value ?? [])
+                ->filter(fn ($row) => trim($row['value'] ?? '') !== '' && trim($row['text'] ?? '') !== '')
+                ->count();
+
+            if ($filled > 0 && $filled !== 6) {
+                $fail('All 6 "Your Journey" steps need both a Title and a Description filled in — or leave all 6 blank to hide the section.');
+            }
+        }];
 
         return $rules;
     }
