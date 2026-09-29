@@ -76,6 +76,9 @@
       color: #fff; font-weight: 700; font-size: 1.05rem; padding: 1.15rem .9rem; display: flex; align-items: center; gap: .55rem;
       border-bottom: 1px solid rgba(255,255,255,.08); margin-bottom: .5rem;
     }
+    .admin-sidebar .brand { text-decoration: none; flex-direction: column; align-items: flex-start; gap: .45rem; padding: 1.35rem 1rem 1.15rem; }
+    .admin-sidebar .brand__logo { display: block; width: 190px; max-width: 100%; height: auto; filter: brightness(0) invert(1); }
+    .admin-sidebar .brand__tag { font-size: .66rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--teal); padding: .15rem .5rem; border-radius: 999px; background: rgba(26,154,140,.15); }
     .admin-sidebar .brand__mark {
       width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
       background: linear-gradient(155deg, var(--teal), var(--primary-2)); font-size: .85rem; font-weight: 800;
@@ -173,7 +176,7 @@
 <div class="d-flex">
   <div class="admin-backdrop" id="adminBackdrop"></div>
   <nav class="admin-sidebar flex-shrink-0" id="adminSidebar">
-    <a class="brand" href="{{ route('admin.dashboard') }}"><span class="brand__mark">B</span> Bizacharya Admin</a>
+    <a class="brand" href="{{ route('admin.dashboard') }}" aria-label="Bizacharya admin dashboard"><img class="brand__logo" src="{{ asset('assets/img/logo.png') }}" alt="Bizacharya" width="190" height="39"><span class="brand__tag">Admin panel</span></a>
     <div class="px-2 pb-4">
       @php
         $counts = $sidebarNewCounts ?? [];

@@ -54,9 +54,15 @@
             <div><dt>Our Email</dt><dd><a href="mailto:{{ config('site.email') }}">{{ config('site.email') }}</a></dd></div>
           </div>
           <div class="contact-facts__item">
-            <span class="card-x__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
-            <div><dt>Registered Address</dt><dd>{!! nl2br(e(config('site.address_full'))) !!}</dd></div>
+            <span class="card-x__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4M10 10h4M10 14h4M10 18h4"/></svg></span>
+            <div><dt>Corporate Address</dt><dd>{!! nl2br(e(config('site.address_full'))) !!}</dd></div>
           </div>
+          @if (filled(config('site.billing_address')))
+            <div class="contact-facts__item">
+              <span class="card-x__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></svg></span>
+              <div><dt>Billing Address</dt><dd>{!! nl2br(e(config('site.billing_address'))) !!}</dd></div>
+            </div>
+          @endif
         </div>
       </div>
     </div>

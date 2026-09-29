@@ -8,7 +8,10 @@ return [
     'phone_e164' => '+919207780808',
     'email' => 'info@bizacharya.com',
     'whatsapp' => '919207780808',
+    // Corporate address (footer + Contact page). Billing address shows in the footer once filled in
+    // (both editable in Admin → Site Settings).
     'address_full' => "First Floor, Athikavil Complex\nUrakam, Thrissur\nKerala – 680562",
+    'billing_address' => '',
     'map_query' => 'Athikavil Complex, Urakam, Thrissur, Kerala 680562',
 
     'social' => [

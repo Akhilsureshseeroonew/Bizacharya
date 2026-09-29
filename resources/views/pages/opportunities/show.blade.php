@@ -72,9 +72,9 @@
       <div class="col-lg-6">
         <p class="eyebrow">What we do</p>
         <h2>Our Services</h2>
-        <ul class="checklist">
-          @foreach ($sector->services_offered ?? [] as $item)
-            <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>{{ $item }}</li>
+        <ul class="checklist checklist--links">
+          @foreach ($sector->servicesOfferedLinks() as $item)
+            <li><a href="{{ $item['url'] }}"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg><span>{{ $item['label'] }}</span><svg class="icon checklist__go" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a></li>
           @endforeach
         </ul>
       </div>

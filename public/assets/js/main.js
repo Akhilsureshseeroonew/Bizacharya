@@ -15,10 +15,17 @@
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    const current = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    // Compare full paths: Home ("/") only matches itself; any other link also matches its child pages
+    // (e.g. /services is active on /services/compliance).
+    const norm = (p) => p.replace(/\/+$/, '').toLowerCase() || '/';
+    const current = norm(location.pathname);
     $$('.nav__link[href], .drawer__nav a[href]').forEach((a) => {
-      const target = (a.getAttribute('href') || '').split('/').pop().toLowerCase();
-      if (target === current) { a.classList.add('is-active'); a.setAttribute('aria-current', 'page'); }
+      if (a.origin !== location.origin || a.getAttribute('href').startsWith('#')) return;
+      const target = norm(a.pathname);
+      const match = target === '/' ? current === '/' : (current === target || current.startsWith(target + '/'));
+      if (!match) return;
+      a.classList.add('is-active');
+      if (current === target) a.setAttribute('aria-current', 'page');
     });
   }
 
@@ -296,12 +303,32 @@
   function initCarousels() {
     if (typeof Swiper === 'undefined') return;
     $$('[data-events-carousel]').forEach((el) => {
+      // Date stub alternates blue / teal on every slide change (incl. the loop wrap-around, where
+      // an odd number of events would otherwise put two same-colour slides back to back):
+      // each newly shown ticket takes the opposite colour of the one shown before it.
+      let shown = null;
+      // In loop mode slides get re-ordered in the DOM, so find the active one by its stable loop index.
+      const activeTicket = (sw) => {
+        const slide = sw.slides.find((s) => Number(s.getAttribute('data-swiper-slide-index')) === sw.realIndex) || sw.slides[sw.activeIndex];
+        return slide ? $('.ticket', slide) : null;
+      };
+      const recolour = (sw) => {
+        const t = activeTicket(sw);
+        if (!t || t === shown) return; // loop fix-ups can fire slideChange more than once per move
+        t.classList.toggle('ticket--teal', shown ? !shown.classList.contains('ticket--teal') : false);
+        shown = t;
+      };
       new Swiper(el, {
         slidesPerView: 1, loop: true, speed: 600, grabCursor: true,
         autoplay: reducedMotion ? false : { delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true },
         navigation: { nextEl: $('.events-carousel__next', el.closest('.events-carousel')), prevEl: $('.events-carousel__prev', el.closest('.events-carousel')) },
         pagination: { el: $('.events-carousel__dots', el.closest('.events-carousel')), clickable: true },
-        a11y: { enabled: true }, keyboard: { enabled: true }
+        a11y: { enabled: true }, keyboard: { enabled: true },
+        on: {
+          // Loop mode can fire slideChange during setup, so start fresh (first ticket blue) once init has finished.
+          init(sw) { shown = null; recolour(sw); },
+          slideChange: recolour
+        }
       });
     });
     $$('[data-stories]').forEach((el) => {
@@ -633,6 +660,22 @@
         const opt = Array.from(select.options).find((o) => o.value.toLowerCase() === interest.trim().toLowerCase());
         if (opt) select.value = opt.value;
       }
+
+      // "#enquiry" links: land on the top of the whole enquiry card (heading included), not the
+      // bare <form>. The form's scroll-margin is stretched by the height of the card content above
+      // it, so the browser's own hash jump and ours agree whichever runs last. Re-run after load so
+      // late images/fonts don't leave it mis-positioned.
+      const card = enquiry.closest('.contact-card');
+      const toEnquiry = () => {
+        if (card) {
+          const above = Math.max(0, enquiry.getBoundingClientRect().top - card.getBoundingClientRect().top);
+          enquiry.style.scrollMarginTop = `calc(var(--header-h) + 24px + ${Math.round(above)}px)`;
+        }
+        if (location.hash === '#enquiry') enquiry.scrollIntoView({ block: 'start', behavior: 'instant' });
+      };
+      toEnquiry();
+      window.addEventListener('load', toEnquiry, { once: true });
+      window.addEventListener('hashchange', toEnquiry);
     }
   }
 
