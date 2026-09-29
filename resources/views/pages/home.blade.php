@@ -12,11 +12,11 @@
   <div class="container hero__inner">
     <div class="hero__content">
       <h1>{!! $page->hero_heading !!}</h1>
-      <p class="hero__sub">Business Consulting &amp; Startup Support Across Kerala</p>
+      <p class="hero__sub">{{ $page->hero_subtitle }}</p>
       <p class="lead">{{ $page->hero_lead }}</p>
       <div class="btn-group">
-        <a class="btn btn--primary btn--lg" href="{{ route('contact') }}#enquiry"><span class="btn__label"><span class="btn__t">Start Your Entrepreneurial Journey</span><span class="btn__t btn__t--alt" aria-hidden="true">Start Your Entrepreneurial Journey</span></span></a>
-        <a class="btn btn--outline btn--lg" href="tel:{{ config('site.phone_e164') }}"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="btn__label"><span class="btn__t">Book a Consultation</span><span class="btn__t btn__t--alt" aria-hidden="true">Book a Consultation</span></span></a>
+        <a class="btn btn--primary btn--lg" href="{{ route('contact') }}#enquiry"><span class="btn__label"><span class="btn__t">{{ $page->hero_cta_label }}</span><span class="btn__t btn__t--alt" aria-hidden="true">{{ $page->hero_cta_label }}</span></span></a>
+        <a class="btn btn--outline btn--lg" href="tel:{{ config('site.phone_e164') }}"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="btn__label"><span class="btn__t">{{ $page->hero_cta2_label }}</span><span class="btn__t btn__t--alt" aria-hidden="true">{{ $page->hero_cta2_label }}</span></span></a>
       </div>
       @php
         $heroStatIcons = [
@@ -39,9 +39,9 @@
 <section class="section section--light events" id="events" data-watermark="corner-tr" data-watermark-parallax>
   <div class="container">
     <div class="section-head section-head--center" data-reveal>
-      <p class="eyebrow">Upcoming Events</p>
-      <h2>What&rsquo;s Happening Next</h2>
-      <p>Join our upcoming events, workshops and sessions designed to help you learn, connect and grow.</p>
+      <p class="eyebrow">{{ $page->events_eyebrow }}</p>
+      <h2>{{ $page->events_heading }}</h2>
+      <p>{{ $page->events_intro }}</p>
     </div>
     <div class="events-carousel" data-reveal>
       <div class="swiper" data-events-carousel>
@@ -89,9 +89,9 @@
 <section class="section journey" id="journey" data-watermark="corner-tr" data-watermark-parallax>
   <div class="container">
     <div class="section-head section-head--center" data-reveal>
-      <p class="eyebrow">The Bizacharya Journey</p>
-      <h2>Your Entrepreneurship Journey with Bizacharya</h2>
-      <p>Six guided stages that take you from a first idea to a registered, funded and growing business.</p>
+      <p class="eyebrow">{{ $page->journey_eyebrow }}</p>
+      <h2>{{ $page->journey_heading }}</h2>
+      <p>{{ $page->journey_intro }}</p>
     </div>
     <div class="journey-map" data-journey>
       <ol class="journey-map__list">
@@ -117,9 +117,9 @@
 <section class="section section--tight sectors" id="sectors">
   <div class="container">
     <div class="section-head section-head--center" data-reveal>
-      <p class="eyebrow">What we support</p>
-      <h2>Sectors We Support</h2>
-      <p>Guidance for the sectors where entrepreneurs across Kerala are building businesses today.</p>
+      <p class="eyebrow">{{ $page->sectors_eyebrow }}</p>
+      <h2>{{ $page->sectors_heading }}</h2>
+      <p>{{ $page->sectors_intro }}</p>
     </div>
     <ol class="sector-flow" data-stagger>
       @foreach ($sectors as $i => $sector)
@@ -146,11 +146,11 @@
       <div class="col-lg-4" data-reveal>
         <div class="sticky-cta">
           <div class="section-head" data-reveal>
-            <p class="eyebrow">What we offer</p>
-            <h2>Services We Offer</h2>
-            <p>Practical, end-to-end support for every stage of your business.</p>
+            <p class="eyebrow">{{ $page->services_eyebrow }}</p>
+            <h2>{{ $page->services_heading }}</h2>
+            <p>{{ $page->services_intro }}</p>
           </div>
-          <a class="btn btn--primary btn--lg" href="tel:{{ config('site.phone_e164') }}"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="btn__label"><span class="btn__t">Speak With an Advisor</span><span class="btn__t btn__t--alt" aria-hidden="true">Speak With an Advisor</span></span></a>
+          <a class="btn btn--primary btn--lg" href="tel:{{ config('site.phone_e164') }}"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="btn__label"><span class="btn__t">{{ $page->services_cta_label }}</span><span class="btn__t btn__t--alt" aria-hidden="true">{{ $page->services_cta_label }}</span></span></a>
         </div>
       </div>
       <div class="col-lg-8">
@@ -180,8 +180,8 @@
 <section class="section section--light vm2-sec" id="vision-mission">
   <div class="container">
     <div class="section-head section-head--center" data-reveal>
-      <p class="eyebrow">The Bizacharya</p>
-      <h2>Our Mission &amp; <span class="vm2-accent">Vision</span></h2>
+      <p class="eyebrow">{{ $page->vm_eyebrow }}</p>
+      <h2>{!! $page->vm_heading !!}</h2>
     </div>
     <div class="vm2" data-vm2>
       <div class="vm2__visual">
@@ -237,9 +237,9 @@
 <section class="section stories stories--deck" id="stories">
   <div class="container">
     <div class="section-head section-head--center" data-reveal>
-      <p class="eyebrow">Success Stories</p>
-      <h2>Entrepreneurs<br>We Empowered</h2>
-      <p>Real journeys of entrepreneurs across Kerala who started, registered, funded and grew their businesses with Bizacharya.</p>
+      <p class="eyebrow">{{ $page->stories_eyebrow }}</p>
+      <h2>{!! $page->stories_heading !!}</h2>
+      <p>{{ $page->stories_intro }}</p>
     </div>
     <div class="story-deck" data-story-deck data-reveal>
       <span class="story-deck__shape story-deck__shape--a" aria-hidden="true"></span>
@@ -265,10 +265,10 @@
   <div class="container strip-cta__inner" data-reveal>
     <span class="strip-cta__icon" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
     <div class="strip-cta__copy">
-      <p class="strip-cta__lead">Let&rsquo;s discuss your business idea</p>
+      <p class="strip-cta__lead">{{ $page->strip_cta_lead }}</p>
       <p class="strip-cta__sub">Call <a class="strip-cta__tel" href="tel:{{ config('site.phone_e164') }}">{{ config('site.phone') }}</a> or send us an enquiry.</p>
     </div>
-    <div class="btn-group"><a class="btn btn--light" href="tel:{{ config('site.phone_e164') }}"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="btn__label"><span class="btn__t">Speak With an Advisor</span><span class="btn__t btn__t--alt" aria-hidden="true">Speak With an Advisor</span></span></a><a class="btn btn--white" href="{{ route('contact') }}#enquiry"><span class="btn__label"><span class="btn__t">Send an Enquiry</span><span class="btn__t btn__t--alt" aria-hidden="true">Send an Enquiry</span></span></a></div>
+    <div class="btn-group"><a class="btn btn--light" href="tel:{{ config('site.phone_e164') }}"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="btn__label"><span class="btn__t">{{ $page->services_cta_label }}</span><span class="btn__t btn__t--alt" aria-hidden="true">{{ $page->services_cta_label }}</span></span></a><a class="btn btn--white" href="{{ route('contact') }}#enquiry"><span class="btn__label"><span class="btn__t">Send an Enquiry</span><span class="btn__t btn__t--alt" aria-hidden="true">Send an Enquiry</span></span></a></div>
   </div>
 </section>
 
@@ -276,9 +276,9 @@
 <section class="section section--light" id="community">
   <div class="container">
     <div class="section-head section-head--center" data-reveal>
-      <p class="eyebrow">News &amp; Events</p>
+      <p class="eyebrow">{{ $page->news_eyebrow }}</p>
       <h2>{{ $page->news_heading }}</h2>
-      <p>Upcoming events, webinars, workshops and membership benefits for entrepreneurs across Kerala.</p>
+      <p>{{ $page->news_intro }}</p>
     </div>
     <div class="row grid-gap news-grid" data-stagger>
       @foreach ($upcomingEvents as $event)
@@ -314,17 +314,17 @@
 <section class="section" id="connect">
   <div class="container">
     <div class="section-head section-head--center" data-reveal>
-      <p class="eyebrow">Enquiry</p>
-      <h2><span id="enquiry-title">Connect with Bizacharya</span></h2>
-      <p>Tell us about your idea or business and a Bizacharya advisor will get in touch.</p>
+      <p class="eyebrow">{{ $page->connect_eyebrow }}</p>
+      <h2><span id="enquiry-title">{{ $page->connect_heading }}</span></h2>
+      <p>{{ $page->connect_intro }}</p>
     </div>
     <div class="connect">
       <div class="form-card" data-reveal>
         <x-site.enquiry-form page-context="home" />
       </div>
       <aside class="connect__side" data-reveal>
-        <h3>Talk to us directly</h3>
-        <p>Prefer a conversation? Call, email or start a WhatsApp chat with our team.</p>
+        <h3>{{ $page->connect_aside_heading }}</h3>
+        <p>{{ $page->connect_aside_intro }}</p>
         <ul class="connect__list">
           <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><div><strong>Registered Address</strong>{!! nl2br(e(config('site.address_full'))) !!}</div></li>
           <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><div><strong>Email</strong><a href="mailto:{{ config('site.email') }}">{{ config('site.email') }}</a></div></li>

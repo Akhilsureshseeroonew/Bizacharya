@@ -46,12 +46,50 @@ class PageAdminController extends ResourceController
         ['name' => 'hero_lead', 'label' => 'Hero intro line', 'type' => 'textarea'],
         ['name' => 'body', 'label' => 'Body (HTML)', 'type' => 'richtext'],
 
+        ['name' => 'hero_subtitle', 'label' => '[Home only] Hero subtitle (small line under the H1)', 'type' => 'text'],
+        ['name' => 'hero_cta_label', 'label' => '[Home only] Hero primary button label', 'type' => 'text'],
+        ['name' => 'hero_cta2_label', 'label' => '[Home only] Hero secondary (call) button label', 'type' => 'text'],
         ['name' => 'journey_steps', 'label' => '[Home only] "Your Journey" steps — one per line as "Title | Description"', 'type' => 'pairs', 'help' => 'e.g. "Discover | Identify strengths and business opportunities."'],
         ['name' => 'vision_text', 'label' => '[Home only] Vision statement', 'type' => 'textarea'],
         ['name' => 'mission_text', 'label' => '[Home only] Mission statement', 'type' => 'textarea'],
         ['name' => 'hero_stats', 'label' => '[Home only] Hero stat badges — one per line as "Line 1 | Line 2"', 'type' => 'pairs', 'help' => 'Exactly 4, e.g. "Guiding | Entrepreneurs"'],
         ['name' => 'vm_words', 'label' => '[Home only] Vision/Mission graphic centre words (one per line)', 'type' => 'list', 'help' => 'Exactly 3, e.g. People / Business / A Stronger Kerala'],
+
+        ['name' => 'events_eyebrow', 'label' => '[Home only] "Upcoming Events" section eyebrow', 'type' => 'text'],
+        ['name' => 'events_heading', 'label' => '[Home only] "Upcoming Events" section heading', 'type' => 'text'],
+        ['name' => 'events_intro', 'label' => '[Home only] "Upcoming Events" section intro', 'type' => 'textarea'],
+
+        ['name' => 'journey_eyebrow', 'label' => '[Home only] "Your Journey" section eyebrow', 'type' => 'text'],
+        ['name' => 'journey_heading', 'label' => '[Home only] "Your Journey" section heading', 'type' => 'text'],
+        ['name' => 'journey_intro', 'label' => '[Home only] "Your Journey" section intro', 'type' => 'textarea'],
+
+        ['name' => 'sectors_eyebrow', 'label' => '[Home only] "Sectors" section eyebrow', 'type' => 'text'],
+        ['name' => 'sectors_heading', 'label' => '[Home only] "Sectors" section heading', 'type' => 'text'],
+        ['name' => 'sectors_intro', 'label' => '[Home only] "Sectors" section intro', 'type' => 'textarea'],
+
+        ['name' => 'services_eyebrow', 'label' => '[Home only] "Services" section eyebrow', 'type' => 'text'],
+        ['name' => 'services_heading', 'label' => '[Home only] "Services" section heading', 'type' => 'text'],
+        ['name' => 'services_intro', 'label' => '[Home only] "Services" section intro', 'type' => 'textarea'],
+        ['name' => 'services_cta_label', 'label' => '[Home only] "Speak With an Advisor" button label (reused in the Services and closing CTA sections)', 'type' => 'text'],
+
+        ['name' => 'vm_eyebrow', 'label' => '[Home only] "Vision & Mission" section eyebrow', 'type' => 'text'],
+        ['name' => 'vm_heading', 'label' => '[Home only] "Vision & Mission" section heading (HTML allowed)', 'type' => 'text'],
+
+        ['name' => 'stories_eyebrow', 'label' => '[Home only] "Success Stories" section eyebrow', 'type' => 'text'],
+        ['name' => 'stories_heading', 'label' => '[Home only] "Success Stories" section heading (HTML allowed)', 'type' => 'text'],
+        ['name' => 'stories_intro', 'label' => '[Home only] "Success Stories" section intro', 'type' => 'textarea'],
+
+        ['name' => 'strip_cta_lead', 'label' => '[Home only] Closing CTA band headline', 'type' => 'text'],
+
+        ['name' => 'news_eyebrow', 'label' => '[Home only] "News & Events" section eyebrow', 'type' => 'text'],
         ['name' => 'news_heading', 'label' => '[Home only] "News & Events" section heading', 'type' => 'text'],
+        ['name' => 'news_intro', 'label' => '[Home only] "News & Events" section intro', 'type' => 'textarea'],
+
+        ['name' => 'connect_eyebrow', 'label' => '[Home only] "Connect" (enquiry) section eyebrow', 'type' => 'text'],
+        ['name' => 'connect_heading', 'label' => '[Home only] "Connect" section heading', 'type' => 'text'],
+        ['name' => 'connect_intro', 'label' => '[Home only] "Connect" section intro', 'type' => 'textarea'],
+        ['name' => 'connect_aside_heading', 'label' => '[Home only] "Connect" side panel heading', 'type' => 'text'],
+        ['name' => 'connect_aside_intro', 'label' => '[Home only] "Connect" side panel intro', 'type' => 'textarea'],
 
         ['name' => 'timeline', 'label' => '[About only] "Our Journey" timeline — one per line as "Value | Description"', 'type' => 'pairs', 'help' => 'e.g. "17+ Years | Business Consulting & Advisory Experience"'],
         ['name' => 'audience', 'label' => '[About only] "Today, we empower" list (one per line)', 'type' => 'list'],
