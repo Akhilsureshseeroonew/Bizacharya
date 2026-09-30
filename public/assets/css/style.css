@@ -149,6 +149,14 @@ strong { font-weight: 600; color: var(--ink); }
 .btn__t--alt { position: absolute; left: 0; top: 0; transform: translateY(100%); }
 .btn:hover .btn__t { transform: translateY(-100%); }
 .btn:hover .btn__t--alt { transform: translateY(0); }
+.btn.is-loading { cursor: default; pointer-events: none; }
+.btn.is-loading .btn__label, .btn.is-loading .icon { visibility: hidden; }
+.btn.is-loading::after {
+  content: ""; position: absolute; inset: 0; margin: auto; width: 1.1em; height: 1.1em;
+  border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%;
+  animation: btn-spin .6s linear infinite;
+}
+@keyframes btn-spin { to { transform: rotate(360deg); } }
 .btn--primary { background: var(--primary); color: #fff; border-color: var(--primary); }
 .btn--primary:hover { color: #fff; }
 .btn--accent { background: var(--brand-2); color: #fff; border-color: var(--brand-2); }

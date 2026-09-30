@@ -35,9 +35,14 @@
           <tr>
             @foreach ($columns as $column)
               <td>
-                @php $value = $item->{$column}; @endphp
+                @php
+                  $value = $item->{$column};
+                  $fieldDef = collect($fields)->firstWhere('name', $column);
+                @endphp
                 @if (is_bool($value))
                   <span class="badge {{ $value ? 'bg-success' : 'bg-secondary' }}">{{ $value ? 'Yes' : 'No' }}</span>
+                @elseif ($fieldDef && $fieldDef['type'] === 'select' && array_key_exists($value, $fieldDef['options'] ?? []))
+                  {{ $fieldDef['options'][$value] }}
                 @elseif ($value instanceof \Illuminate\Support\Carbon)
                   {{ $value->format('d M Y') }}
                 @elseif (is_array($value))
@@ -68,5 +73,5 @@
   </div>
 </div>
 
-<div class="mt-3">{{ $items->links() }}</div>
+@include('admin.partials.pagination')
 @endsection

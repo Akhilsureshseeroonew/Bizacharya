@@ -15,6 +15,8 @@
           @php $cast = $item->{$key}; @endphp
           @if (is_array($cast))
             {{ implode(', ', $cast) }}
+          @elseif ($cast instanceof \Illuminate\Support\Carbon)
+            {{ $cast->copy()->setTimezone('Asia/Kolkata')->format('d M Y, h:i A') }} IST
           @else
             {{ $cast }}
           @endif
@@ -36,18 +38,18 @@
       <form method="post" action="{{ route("{$routeBase}.update-status", $item->id) }}" class="row g-2 align-items-end">
         @csrf
         @method('PUT')
-        <div class="col-auto">
+        <div class="col-12 col-sm-auto">
           <select name="status" class="form-select">
             @foreach ($statusOptions as $value => $label)
               <option value="{{ $value }}" @selected($item->status === $value)>{{ $label }}</option>
             @endforeach
           </select>
         </div>
-        <div class="col-4">
+        <div class="col-12 col-sm">
           <input type="text" name="admin_notes" class="form-control" placeholder="Admin notes (optional)" value="{{ $item->admin_notes }}">
         </div>
-        <div class="col-auto">
-          <button type="submit" class="btn btn-primary">Save</button>
+        <div class="col-12 col-sm-auto">
+          <button type="submit" class="btn btn-primary w-100">Save</button>
         </div>
       </form>
     </div>

@@ -552,7 +552,7 @@
     email: 'Enter a valid email address.',
     pincode: 'Enter a valid 6-digit pincode.',
     fileType: 'Upload a PDF, DOC or DOCX file.',
-    fileSize: 'File must be 5 MB or smaller.'
+    blank: "This can't be just spaces — leave it empty if you don't want to fill it in."
   };
 
   function setError(field, msg) {
@@ -574,12 +574,14 @@
       if (f) {
         if (!/\.(pdf|docx?)$/i.test(f.name)) { setError(field, messages.fileType); return false; }
         const max = parseFloat(input.dataset.maxMb || '5');
-        if (f.size > max * 1024 * 1024) { setError(field, messages.fileSize); return false; }
+        if (f.size > max * 1024 * 1024) { setError(field, 'File must be ' + max + ' MB or smaller.'); return false; }
       }
       setError(field, ''); return true;
     }
-    const v = (input.value || '').trim();
+    const raw = input.value || '';
+    const v = raw.trim();
     if (required && !v) { setError(field, messages.required); return false; }
+    if (!required && raw && !v) { setError(field, messages.blank); return false; }
     if (v && type && validators[type] && !validators[type](v)) { setError(field, messages[type]); return false; }
     setError(field, ''); return true;
   }
@@ -607,7 +609,7 @@
 
         const submitBtn = $('button[type="submit"]', form);
         form.dataset.submitting = '1';
-        if (submitBtn) submitBtn.disabled = true;
+        if (submitBtn) { submitBtn.disabled = true; submitBtn.classList.add('is-loading'); }
 
         fetch(form.getAttribute('action'), {
           method: 'POST',
@@ -618,6 +620,13 @@
           if (res.ok) {
             const body = $('[data-form-body]', form) || form;
             const success = $('.form-success', form);
+            form.reset();
+            // form.reset() doesn't fire 'change', so anything driven by a 'change'
+            // listener — the Services multiselect's chips, a file input's chosen-name
+            // display — would otherwise keep showing stale data after a reset.
+            $$('[data-select-all]', form).forEach((cb) => cb.dispatchEvent(new Event('change')));
+            $$('[data-file]', form).forEach((input) => input.dispatchEvent(new Event('change')));
+            fields.forEach((f) => setError(f, ''));
             if (success) { if (body !== form) body.hidden = true; success.hidden = false; success.focus && success.setAttribute('tabindex', '-1'); success.focus(); }
             form.dispatchEvent(new CustomEvent('bz:submitted', { bubbles: true }));
             return;
@@ -640,7 +649,7 @@
           if (formError) { formError.textContent = 'Network error. Please check your connection and try again.'; formError.hidden = false; }
         }).finally(() => {
           form.dataset.submitting = '0';
-          if (submitBtn) submitBtn.disabled = false;
+          if (submitBtn) { submitBtn.disabled = false; submitBtn.classList.remove('is-loading'); }
         });
       });
     });

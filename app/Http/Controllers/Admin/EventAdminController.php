@@ -42,6 +42,8 @@ class EventAdminController extends ResourceController
         ['name' => 'venue', 'label' => 'Venue (short, shown on cards)', 'type' => 'text'],
         ['name' => 'venue_full', 'label' => 'Venue (full address, optional)', 'type' => 'text'],
         ['name' => 'organizer', 'label' => 'Organizer (optional)', 'type' => 'text'],
+        ['name' => 'price_label', 'label' => 'Price label (shown in the sidebar card, e.g. "Free", "Basic", "₹999")', 'type' => 'text'],
+        ['name' => 'seats_label', 'label' => 'Seats label (shown next to the price, e.g. "limited seats", "unlimited seats")', 'type' => 'text'],
         ['name' => 'summary', 'label' => 'Short summary (used on cards + detail page intro)', 'type' => 'textarea', 'required' => true],
         ['name' => 'about_heading', 'label' => 'About section heading (optional)', 'type' => 'text', 'help' => 'Defaults to "About the event" if left blank.'],
         ['name' => 'body', 'label' => 'About the event', 'type' => 'richtext'],

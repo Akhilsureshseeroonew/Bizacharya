@@ -28,7 +28,7 @@
                 @if ($column === 'status')
                   <span class="badge bg-{{ $statusColors[$value] ?? 'secondary' }} text-dark">{{ ucfirst($value) }}</span>
                 @elseif ($value instanceof \Illuminate\Support\Carbon)
-                  {{ $value->format('d M Y H:i') }}
+                  {{ $value->copy()->setTimezone('Asia/Kolkata')->format('d M Y, h:i A') }} IST
                 @else
                   {{ \Illuminate\Support\Str::limit((string) $value, 40) }}
                 @endif
@@ -49,5 +49,5 @@
   </div>
 </div>
 
-<div class="mt-3">{{ $items->links() }}</div>
+@include('admin.partials.pagination')
 @endsection

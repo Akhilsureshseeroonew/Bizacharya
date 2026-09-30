@@ -22,4 +22,6 @@ class AssociateAdminController extends LeadController
         'approved' => 'Approved',
         'rejected' => 'Rejected',
     ];
+
+    protected bool $forwardOnlyStatus = true;
 }

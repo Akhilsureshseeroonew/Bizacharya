@@ -57,7 +57,7 @@ abstract class ResourceController extends Controller
             $query->where($this->searchField, 'like', '%'.$request->string('q').'%');
         }
 
-        $items = $query->orderBy($this->orderBy, $this->orderDir)->paginate(20)->withQueryString();
+        $items = $query->orderBy($this->orderBy, $this->orderDir)->paginate(10)->withQueryString();
 
         return view('admin.resource.index', [
             'items' => $items,

@@ -25,6 +25,8 @@ class JobApplicationAdminController extends LeadController
         'hired' => 'Hired',
     ];
 
+    protected bool $forwardOnlyStatus = true;
+
     public function downloadCv($id)
     {
         $application = JobApplication::findOrFail($id);

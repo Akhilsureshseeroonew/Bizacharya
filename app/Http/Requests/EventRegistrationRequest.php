@@ -14,11 +14,18 @@ class EventRegistrationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:150'],
+            'name' => ['required', 'string', 'max:150', 'regex:/^(?=.*\pL)[\pL\s.\'-]+$/u'],
             'phone' => ['required', 'string', 'max:20'],
             'email' => ['required', 'email', 'max:150'],
             'address' => ['required', 'string', 'max:500'],
             'pincode' => ['required', 'string', 'max:10'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.regex' => 'Please enter a valid name — letters only, not numbers or symbols.',
         ];
     }
 }

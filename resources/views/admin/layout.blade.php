@@ -61,6 +61,7 @@
       min-height: 100vh; width: 258px; color: #fff;
       background: linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 100%);
       box-shadow: 2px 0 12px rgba(10, 37, 64, .15);
+      position: sticky; top: 0; align-self: flex-start; height: 100vh; overflow-y: auto;
     }
     .admin-sidebar a.nav-link-item {
       color: #C9D6E5; text-decoration: none; display: flex; align-items: center; gap: .6rem;
@@ -150,7 +151,9 @@
     .repeater__row .repeater__inputs { flex: 1 1 auto; display: flex; flex-direction: column; gap: .35rem; }
     .repeater__row .repeater__inputs.repeater__inputs--pair { flex-direction: row; }
     .repeater__remove {
-      flex-shrink: 0; width: 2.1rem; height: 2.1rem; border: 1px solid var(--line); border-radius: .5rem;
+      /* 2.75rem (44px) matches Apple's/Android's minimum recommended touch-target
+         size — smaller than that is genuinely hard to tap accurately on a phone. */
+      flex-shrink: 0; width: 2.75rem; height: 2.75rem; border: 1px solid var(--line); border-radius: .5rem;
       background: #fff; color: var(--danger); display: inline-flex; align-items: center; justify-content: center; margin-top: 0;
     }
     .repeater__remove:hover { background: #FBE7E5; }
@@ -160,6 +163,14 @@
     @media (max-width: 991.98px) {
       .admin-sidebar {
         position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto;
+        /* height was 100vh on the desktop rule above — on iOS Safari that's measured
+           against the largest possible viewport (address bar hidden), so with top+bottom
+           already pinning both edges, an explicit height here would win over bottom
+           per the CSS spec and the drawer could render taller than what's actually
+           visible, hiding the last nav items behind Safari's toolbar. Auto lets
+           top/bottom size it to the real visible viewport instead, which also tracks
+           correctly as Safari's chrome shows/hides while scrolling. */
+        height: auto; min-height: 0;
         transform: translateX(-100%); transition: transform .25s ease; z-index: 1045;
       }
       .admin-sidebar.show { transform: translateX(0); }
@@ -169,6 +180,21 @@
       .admin-backdrop.show { display: block; }
       .sidebar-toggle { display: inline-flex; }
       main.p-4 { padding: 1rem !important; }
+    }
+
+    @media (max-width: 575.98px) {
+      /* Two side-by-side "Title" / "Description" boxes get too cramped to type
+         into on a phone — stack them instead. */
+      .repeater__row .repeater__inputs.repeater__inputs--pair { flex-direction: column; }
+      .repeater__row { align-items: center; }
+    }
+
+    @media (max-width: 767.98px) {
+      /* Bootstrap's -sm controls use a 14px font. iOS Safari auto-zooms the whole
+         page on focus for any text input under 16px, which is jarring on a phone —
+         bump these specific ones back up to the no-zoom threshold. The compact
+         size still applies on tablet/desktop, where that's not an issue. */
+      .form-control-sm, .form-select-sm { font-size: 16px; }
     }
   </style>
 </head>

@@ -26,9 +26,41 @@ abstract class LeadController extends Controller
     /** @var array<string, string>|null */
     protected ?array $statusOptions = null;
 
+    /**
+     * When true, $statusOptions' key order is treated as a one-way pipeline —
+     * a status can only move to itself or a later stage, never back to an
+     * earlier one (e.g. Contacted can't be moved back to Viewed).
+     */
+    protected bool $forwardOnlyStatus = false;
+
+    protected function statusRank(string $status): int|false
+    {
+        return array_search($status, array_keys($this->statusOptions ?? []), true);
+    }
+
+    /** Options valid to move *to* from the item's current status, respecting forwardOnlyStatus. */
+    protected function availableStatusOptions(string $currentStatus): array
+    {
+        if (! $this->forwardOnlyStatus) {
+            return $this->statusOptions ?? [];
+        }
+
+        $currentRank = $this->statusRank($currentStatus);
+
+        if ($currentRank === false) {
+            return $this->statusOptions ?? [];
+        }
+
+        return array_filter(
+            $this->statusOptions ?? [],
+            fn ($label, $key) => $this->statusRank($key) >= $currentRank,
+            ARRAY_FILTER_USE_BOTH
+        );
+    }
+
     public function index(Request $request)
     {
-        $items = $this->model::query()->latest()->paginate(20);
+        $items = $this->model::query()->latest()->paginate(10);
 
         return view('admin.leads.index', [
             'items' => $items,
@@ -58,7 +90,7 @@ abstract class LeadController extends Controller
             'item' => $item,
             'routeBase' => $this->routeBase,
             'title' => $this->title,
-            'statusOptions' => $this->statusOptions,
+            'statusOptions' => $this->statusOptions ? $this->availableStatusOptions($item->status) : null,
         ]);
     }
 
@@ -67,8 +99,10 @@ abstract class LeadController extends Controller
         $item = $this->model::findOrFail($id);
 
         $request->validate([
-            'status' => 'required|string|in:'.implode(',', array_keys($this->statusOptions ?? [])),
+            'status' => 'required|string|in:'.implode(',', array_keys($this->availableStatusOptions($item->status))),
             'admin_notes' => 'nullable|string',
+        ], [
+            'status.in' => 'That status has already passed — it can only move forward, not back to an earlier stage.',
         ]);
 
         $item->update([

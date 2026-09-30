@@ -127,7 +127,7 @@
       <aside class="ev-aside">
         <div class="ev-card sticky-cta" data-reveal>
           <div class="ev-card__head">
-            <p class="ev-card__price">Basic <span>&middot; limited seats</span></p>
+            <p class="ev-card__price">{{ $event->price_label ?: 'Free' }} <span>&middot; {{ $event->seats_label ?: 'limited seats' }}</span></p>
           </div>
           <ul class="ev-card__facts">
             @if ($event->event_date)

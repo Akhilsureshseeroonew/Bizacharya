@@ -21,4 +21,6 @@ class EnquiryAdminController extends LeadController
         'contacted' => 'Contacted',
         'closed' => 'Closed',
     ];
+
+    protected bool $forwardOnlyStatus = true;
 }

@@ -10,6 +10,7 @@ use App\Models\MenuItem;
 use App\Models\Sector;
 use App\Models\Service;
 use App\Support\Settings;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\View;
@@ -30,6 +31,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(191);
+
+        // Only the admin panel paginates anything (Bootstrap-based) — the public
+        // site never calls paginate(), so this is safe to set globally.
+        Paginator::useBootstrapFive();
 
         try {
             if (Schema::hasTable('settings')) {
