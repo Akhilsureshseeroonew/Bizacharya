@@ -334,7 +334,16 @@
     $$('[data-stories]').forEach((el) => {
       const wrap = el.closest('.stories');
       const cur = $('[data-story-current]', wrap), bar = $('[data-story-progress]', wrap);
-      const total = $$('.swiper-slide', el).length;
+      const slides = $$('.swiper-slide', el);
+      const total = slides.length;
+      // Centered loop with slidesPerView:'auto' needs spare slides on both sides of the active one;
+      // with only a few stories the left side renders empty, so pad with clones (counter uses % total).
+      if (total > 1) {
+        const wrapper = $('.swiper-wrapper', el);
+        for (let n = total; n < 8; n += total) {
+          slides.forEach((s) => { const c = s.cloneNode(true); c.setAttribute('aria-hidden', 'true'); wrapper.appendChild(c); });
+        }
+      }
       const update = (sw) => {
         const idx = typeof sw.realIndex === 'number' && !isNaN(sw.realIndex) ? sw.realIndex : 0;
         const n = (idx % total) + 1;
@@ -685,6 +694,15 @@
       toEnquiry();
       window.addEventListener('load', toEnquiry, { once: true });
       window.addEventListener('hashchange', toEnquiry);
+    }
+
+    // "#story-{id}" links (home page "Read Full Story"): the featured carousel above the grid
+    // lays out after the browser's hash jump, so re-align once everything has loaded.
+    if (/^#story-\d+$/.test(location.hash)) {
+      window.addEventListener('load', () => {
+        const target = document.getElementById(location.hash.slice(1));
+        if (target) target.scrollIntoView({ block: 'start', behavior: 'instant' });
+      }, { once: true });
     }
   }
 
