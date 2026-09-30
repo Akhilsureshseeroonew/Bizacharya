@@ -620,12 +620,25 @@
         form.dataset.submitting = '1';
         if (submitBtn) { submitBtn.disabled = true; submitBtn.classList.add('is-loading'); }
 
-        fetch(form.getAttribute('action'), {
+        // The loader should always be visible for at least MIN_LOADING_MS — on a fast
+        // connection a raw fetch can resolve in well under 100ms, which just reads as a
+        // flicker rather than feedback. Promise.all waits for whichever takes longer, so
+        // a slow server still keeps the loader up for however long the real response takes.
+        const MIN_LOADING_MS = 500;
+        const minLoading = new Promise((resolve) => setTimeout(resolve, MIN_LOADING_MS));
+        const request = fetch(form.getAttribute('action'), {
           method: 'POST',
           body: new FormData(form),
           headers: { Accept: 'application/json' },
           credentials: 'same-origin'
-        }).then(async (res) => {
+        }).then((res) => ({ res })).catch((err) => ({ err }));
+
+        Promise.all([request, minLoading]).then(async ([result]) => {
+          if (result.err) {
+            if (formError) { formError.textContent = 'Network error. Please check your connection and try again.'; formError.hidden = false; }
+            return;
+          }
+          const res = result.res;
           if (res.ok) {
             const body = $('[data-form-body]', form) || form;
             const success = $('.form-success', form);
@@ -654,8 +667,6 @@
             return;
           }
           if (formError) { formError.textContent = 'Something went wrong. Please try again or call us directly.'; formError.hidden = false; }
-        }).catch(() => {
-          if (formError) { formError.textContent = 'Network error. Please check your connection and try again.'; formError.hidden = false; }
         }).finally(() => {
           form.dataset.submitting = '0';
           if (submitBtn) { submitBtn.disabled = false; submitBtn.classList.remove('is-loading'); }
