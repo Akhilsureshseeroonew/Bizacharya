@@ -26,7 +26,7 @@ class HomeController extends Controller
             'company' => '',
             'testimonial' => $s->quote,
             'category' => $s->sector_tag ?: 'Success Story',
-            'storyLink' => route('success-stories'),
+            'storyLink' => route('success-stories').'#story-'.$s->id,
         ])->values());
 
         return view('pages.home', compact('page', 'upcomingEvents', 'sectors', 'services', 'featuredStories', 'storiesJson'));

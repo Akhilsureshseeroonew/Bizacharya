@@ -31,7 +31,7 @@
               @else
                 <div class="ph ph--circle story-card__avatar" role="img" aria-label="{{ $story->avatar_label ?: 'Portrait of '.$story->name }}"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></div>
               @endif
-              <span><strong>{{ $story->headline }}</strong><span class="story-card__name">{{ $story->name }}@if($story->location), {{ $story->location }}@endif</span></span>
+              <span><strong>{{ $story->name }}</strong>@if($story->location)<span class="story-card__name">{{ $story->location }}</span>@endif</span>
             </footer></article></div>
           @endforeach
         </div>
@@ -58,7 +58,7 @@
     <div class="row grid-gap story-grid" data-stagger>
       @foreach ($stories as $story)
         <div class="col-md-6 col-lg-4" data-reveal>
-          <article class="story-card">
+          <article class="story-card" id="story-{{ $story->id }}">
             <span class="story-card__mark" aria-hidden="true">&ldquo;</span>
             <span class="tag story-card__tag">Success story</span>
             <h3>{{ $story->headline }}</h3>
@@ -69,7 +69,7 @@
               @else
                 <div class="ph ph--circle story-card__avatar" role="img" aria-label="{{ $story->avatar_label ?: 'Portrait of '.$story->name }}"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></div>
               @endif
-              <span><strong>{{ $story->headline }}</strong><span class="story-card__name">{{ $story->name }}@if($story->location), {{ $story->location }}@endif</span></span>
+              <span><strong>{{ $story->name }}</strong>@if($story->location)<span class="story-card__name">{{ $story->location }}</span>@endif</span>
             </footer>
           </article>
         </div>

@@ -11,7 +11,7 @@
     <div class="col-12 field">
       <label for="enq-interest">Area of Interest</label>
       <select id="enq-interest" name="interest" required>
-        <option value="">Select an area of interest</option>
+        <option value="" disabled selected hidden>Select an area of interest</option>
         <option value="Financial Services">Financial Services</option>
         <option value="Agri-Business &amp; Value Addition">Agri-Business &amp; Value Addition</option>
         <option value="Rural Enterprises">Rural Enterprises</option>
