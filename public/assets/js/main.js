@@ -615,7 +615,7 @@
         // connection a raw fetch can resolve in well under 100ms, which just reads as a
         // flicker rather than feedback. Promise.all waits for whichever takes longer, so
         // a slow server still keeps the loader up for however long the real response takes.
-        const MIN_LOADING_MS = 500;
+        const MIN_LOADING_MS = 2000;
         const minLoading = new Promise((resolve) => setTimeout(resolve, MIN_LOADING_MS));
         const request = fetch(form.getAttribute('action'), {
           method: 'POST',
