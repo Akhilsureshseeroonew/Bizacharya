@@ -46,7 +46,7 @@
               <h3>{{ $event->title }}</h3>
               <p>{{ $event->summary }}</p>
               <div class="media-card__foot">
-                <div class="media-card__meta"><span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>{{ $event->event_date?->format('d M Y') ?? 'Ongoing' }}</span></div>
+                <div class="media-card__meta"><span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>{{ $event->event_date?->format('d M Y') ?? ($event->status === 'completed' ? 'Completed' : 'Upcoming') }}</span></div>
                 <a class="text-link" href="{{ $event->url() }}">Learn More <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
               </div>
             </div>
